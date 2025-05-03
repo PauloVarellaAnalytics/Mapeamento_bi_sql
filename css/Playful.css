@@ -1,15 +1,15 @@
-.button.alternative {
+.playful-button.alternative {
   --color-hover: #2B3044;
   --background: #362A89;
   --hover-back: #6D58FF;
   --hover-front: #F6F8FF;
 }
-.button.simple {
+.playful-button.simple {
   --background: #275EFE;
   --background-hover: #1749DB;
 }
 
-.button {
+.playful-button {
   --color: #fff;
   --color-hover: var(--color);
   --background: #2B3044;
@@ -34,7 +34,7 @@
   background: var(--b, var(--background));
   transition: color 0.2s linear var(--c-d, 0.2s), background 0.3s linear var(--b-d, 0.2s);
 }
-.button:not(.simple):before, .button:not(.simple):after {
+.playful-button:not(.simple):before, .playful-button:not(.simple):after {
   content: "";
   position: absolute;
   background: var(--pb, var(--hover-back));
@@ -46,16 +46,16 @@
   transform: translateY(var(--y, 50%));
   transition: transform var(--d, 0.4s) ease-in var(--d-d, 0s), border-radius 0.5s ease var(--br-d, 0.08s);
 }
-.button:not(.simple):after {
+.playful-button:not(.simple):after {
   --pb: var(--hover-front);
   --d: .44s;
 }
-.button div {
+.playful-button div {
   z-index: 1;
   position: relative;
   display: flex;
 }
-.button div span {
+.playful-button div span {
   display: block;
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
@@ -63,25 +63,25 @@
   -webkit-animation: var(--name, none) 0.7s linear forwards 0.18s;
           animation: var(--name, none) 0.7s linear forwards 0.18s;
 }
-.button.in {
+.playful-button.in {
   --name: move;
 }
-.button.in:not(.out) {
+.playful-button.in:not(.out) {
   --c: var(--color-hover);
   --b: var(--background-hover);
 }
-.button.in:not(.out):before, .button.in:not(.out):after {
+.playful-button.in:not(.out):before, .playful-button.in:not(.out):after {
   --y: 0;
   --br: 5%;
 }
-.button.in:not(.out):after {
+.playful-button.in:not(.out):after {
   --br: 10%;
   --d-d: .02s;
 }
-.button.in.out {
+.playful-button.in.out {
   --name: move-out;
 }
-.button.in.out:before {
+.playful-button.in.out:before {
   --d-d: .06s;
 }
 
@@ -130,6 +130,7 @@
     transform: translateY(calc(2px * var(--move))) translateZ(0) rotate(calc(3deg * var(--rotate) * var(--part)));
   }
 }
+
 html {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
@@ -155,18 +156,18 @@ body {
     flex-direction: column;
   }
 }
-body .button {
+body .playful-button {
   display: block;
   margin: 0 8px;
 }
-body .button:first-child {
+body .playful-button:first-child {
   margin-left: 0;
 }
-body .button:last-child {
+body .playful-button:last-child {
   margin-right: 0;
 }
 @media (max-width: 440px) {
-  body .button {
+  body .playful-button {
     margin: 8px 0;
   }
 }
