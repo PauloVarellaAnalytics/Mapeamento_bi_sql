@@ -8,7 +8,7 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600;800&display=swap" rel="stylesheet">
 
-  <!-- Evita cache forçando atualização -->
+  <!-- Estilo do botão Playful -->
   <link rel="stylesheet" href="css/Playful.css?v=1">
 
   <style>
@@ -66,25 +66,6 @@
       gap: 15px;
     }
 
-    .button-list button {
-      padding: 15px 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1.05em;
-      font-weight: 600;
-      color: #fff;
-      background: #007acc;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
-      text-align: left;
-    }
-
-    .button-list button:hover {
-      background: #005fa3;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-    }
-
     section {
       max-width: 700px;
       margin: 40px auto;
@@ -100,11 +81,6 @@
     }
 
     @media (max-width: 480px) {
-      .button-list button {
-        font-size: 1em;
-        padding: 12px 15px;
-      }
-
       p, .button-list {
         padding-left: 15px;
         padding-right: 15px;
@@ -126,11 +102,11 @@
   </p>
 
   <div class="button-list">
-    <a href="#secao1"><button class="playful">📊 Extração das tabelas dos relatórios</button></a>
-    <a href="#secao2"><button class="playful">🔍 Identificação dos servidores e bancos</button></a>
-    <a href="#secao3"><button class="playful">⚙️ Mapeamento de procedures e jobs</button></a>
-    <a href="#secao4"><button class="playful">📦 Associação com pacotes ETL</button></a>
-    <a href="#secao5"><button class="playful">🧪 Verificação de comandos INSERT</button></a>
+    <a href="#secao1"><button class="button">📊 Extração das tabelas dos relatórios</button></a>
+    <a href="#secao2"><button class="button">🔍 Identificação dos servidores e bancos</button></a>
+    <a href="#secao3"><button class="button">⚙️ Mapeamento de procedures e jobs</button></a>
+    <a href="#secao4"><button class="button">📦 Associação com pacotes ETL</button></a>
+    <a href="#secao5"><button class="button">🧪 Verificação de comandos INSERT</button></a>
   </div>
 
   <!-- Seções de conteúdo -->
@@ -159,10 +135,10 @@
     <p>Conteúdo sobre a verificação de comandos INSERT nas procedures para confirmar as origens dos dados.</p>
   </section>
 
-  <!-- Playful hover -->
+  <!-- Script do efeito Playful -->
   <script src="js/Playful.js?v=1"></script>
   <script>
-    document.querySelectorAll('button.playful').forEach(button => {
+    document.querySelectorAll('button.button').forEach(button => {
         let div = document.createElement('div'),
             letters = button.textContent.trim().split('');
 
