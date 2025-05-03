@@ -4,20 +4,12 @@
   <meta charset="UTF-8">
   <title>Mapeamento Power BI + SQL</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600;800&display=swap" rel="stylesheet">
-
-  <!-- Estilo do botão Playful -->
-  <link rel="stylesheet" href="css/Playful.css?v=1">
+  <link rel="stylesheet" href="style.css?v=1">
 
   <style>
     * {
       box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
     }
 
     body {
@@ -57,132 +49,141 @@
       text-align: center;
     }
 
-    .button-list {
+    .step {
       max-width: 700px;
-      margin: 20px auto 40px;
+      margin: 20px auto;
       padding: 0 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
     }
 
-    section {
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 20px;
+    .step-title {
       background: #ffffff;
+      margin: 10px 0;
+      padding: 15px 20px;
+      border-left: 5px solid #007acc;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, border-color 0.3s ease;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    section h2 {
-      margin-top: 0;
-      color: #007acc;
+    .step-title:hover {
+      border-left-color: #ff9900;
     }
 
-    @media (max-width: 480px) {
-      p, .button-list {
-        padding-left: 15px;
-        padding-right: 15px;
-      }
+    .step-content {
+      background: #ffffff;
+      margin-top: 5px;
+      padding: 15px 20px;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      display: none;
+    }
+
+    .arrow {
+      font-size: 1.2em;
+      transition: transform 0.3s ease;
+    }
+
+    .step-title.active .arrow {
+      transform: rotate(180deg);
+    }
+
+    pre {
+      background: #f0f0f0;
+      padding: 10px;
+      overflow-x: auto;
+      border-radius: 5px;
+      font-size: 0.9em;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div>
+    <div class="js-tilt" data-tilt>
       <img src="images/img-01.png?v=1" alt="Apresentação" class="tilt-img">
     </div>
     <h1>Mapeamento Power BI + SQL</h1>
   </header>
 
   <p>
-    v1Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.
+    Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.
   </p>
 
-  <div class="button-list">
-    <button class="button" data-target="#secao1">📊 Extração das tabelas dos relatórios</button>
-    <button class="button" data-target="#secao2">🔍 Identificação dos servidores e bancos</button>
-    <button class="button" data-target="#secao3">⚙️ Mapeamento de procedures e jobs</button>
-    <button class="button" data-target="#secao4">📦 Associação com pacotes ETL</button>
-    <button class="button" data-target="#secao5">🧪 Verificação de comandos INSERT</button>
+  <div class="step">
+    <div class="step-title js-tilt" data-tilt>
+      📊 Extração das tabelas dos relatórios via Diagnóstico de Desempenho e Power BI Helper
+      <span class="arrow">▼</span>
+    </div>
+    <div class="step-content">
+      <p>Esta etapa consiste em obter todas as tabelas utilizadas no relatório, utilizando as ferramentas nativas do Power BI (Diagnóstico de Desempenho) ou a ferramenta Power BI Helper, com exportação de metadados.</p>
+      <pre>// Aqui você poderá inserir os códigos SQL utilizados nesta etapa</pre>
+    </div>
   </div>
 
-  <!-- Seções de conteúdo -->
-  <section id="secao1">
-    <h2>📊 Extração das tabelas dos relatórios</h2>
-    <p>Aqui você irá inserir o conteúdo referente a extração das tabelas via Diagnóstico de Desempenho e Power BI Helper.</p>
-  </section>
+  <div class="step">
+    <div class="step-title js-tilt" data-tilt>
+      🔍 Identificação dos servidores e bancos de dados de origem
+      <span class="arrow">▼</span>
+    </div>
+    <div class="step-content">
+      <p>Com as tabelas extraídas, é feita a verificação da origem dos dados, identificando os servidores, bancos de dados e os ambientes (nuvem ou on-premises).</p>
+      <pre>// Aqui você poderá inserir os códigos SQL utilizados nesta etapa</pre>
+    </div>
+  </div>
 
-  <section id="secao2">
-    <h2>🔍 Identificação dos servidores e bancos</h2>
-    <p>Conteúdo relacionado à identificação dos servidores e bancos de dados de origem.</p>
-  </section>
+  <div class="step">
+    <div class="step-title js-tilt" data-tilt>
+      ⚙️ Mapeamento de procedures e jobs associadas
+      <span class="arrow">▼</span>
+    </div>
+    <div class="step-content">
+      <p>Busca por procedures que referenciem as tabelas dos relatórios. Em seguida, essas procedures são associadas aos jobs que as executam periodicamente.</p>
+      <pre>// Aqui você poderá inserir os códigos SQL utilizados nesta etapa</pre>
+    </div>
+  </div>
 
-  <section id="secao3">
-    <h2>⚙️ Mapeamento de procedures e jobs</h2>
-    <p>Conteúdo sobre o mapeamento das procedures e jobs associadas aos relatórios.</p>
-  </section>
+  <div class="step">
+    <div class="step-title js-tilt" data-tilt>
+      📦 Associação com pacotes e projetos ETL
+      <span class="arrow">▼</span>
+    </div>
+    <div class="step-content">
+      <p>Identificação de quais jobs disparam pacotes e projetos SSIS ou outros processos ETL responsáveis pela carga das tabelas.</p>
+      <pre>// Aqui você poderá inserir os códigos SQL utilizados nesta etapa</pre>
+    </div>
+  </div>
 
-  <section id="secao4">
-    <h2>📦 Associação com pacotes ETL</h2>
-    <p>Conteúdo sobre a associação com pacotes e projetos ETL (Integration Services, etc).</p>
-  </section>
+  <div class="step">
+    <div class="step-title js-tilt" data-tilt>
+      🧪 Verificação de comandos INSERT nas procedures
+      <span class="arrow">▼</span>
+    </div>
+    <div class="step-content">
+      <p>Análise das procedures para confirmar se realizam INSERT nas tabelas dos relatórios, validando a origem final dos dados.</p>
+      <pre>// Aqui você poderá inserir os códigos SQL utilizados nesta etapa</pre>
+    </div>
+  </div>
 
-  <section id="secao5">
-    <h2>🧪 Verificação de comandos INSERT</h2>
-    <p>Conteúdo sobre a verificação de comandos INSERT nas procedures para confirmar as origens dos dados.</p>
-  </section>
-
-  <!-- Script do efeito Playful -->
-  <script src="js/Playful.js?v=1"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
   <script>
-    // Efeito Playful nos botões
-    document.querySelectorAll('button.button').forEach(button => {
-        let div = document.createElement('div'),
-            letters = button.textContent.trim().split('');
-
-        button.textContent = ''; // limpa o conteúdo original
-
-        letters.forEach((letter, index, array) => {
-            let element = document.createElement('span'),
-                part = (index >= array.length / 2) ? -1 : 1,
-                position = (index >= array.length / 2) ? array.length / 2 - index + (array.length / 2 - 1) : index,
-                move = position / (array.length / 2),
-                rotate = 1 - move;
-
-            element.innerHTML = !letter.trim() ? '&nbsp;' : letter;
-            element.style.setProperty('--move', move);
-            element.style.setProperty('--rotate', rotate);
-            element.style.setProperty('--part', part);
-
-            div.appendChild(element);
-        });
-
-        button.appendChild(div);
-
-        button.addEventListener('mouseenter', e => {
-            if(!button.classList.contains('out')) {
-                button.classList.add('in');
-            }
-        });
-
-        button.addEventListener('mouseleave', e => {
-            if(button.classList.contains('in')) {
-                button.classList.add('out');
-                setTimeout(() => button.classList.remove('in', 'out'), 950);
-            }
-        });
+    VanillaTilt.init(document.querySelectorAll(".js-tilt"), {
+      max: 15,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.2
     });
 
-    // Função para scroll ao clicar no botão
-    document.querySelectorAll('.button-list button').forEach(button => {
-      button.addEventListener('click', () => {
-        const target = document.querySelector(button.dataset.target);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
+    // Função para expandir/contrair os blocos
+    document.querySelectorAll(".step-title").forEach(title => {
+      title.addEventListener("click", () => {
+        const content = title.nextElementSibling;
+        const isActive = title.classList.toggle("active");
+        content.style.display = isActive ? "block" : "none";
       });
     });
   </script>
