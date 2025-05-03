@@ -1,136 +1,93 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mapeamento Power BI + SQL</title>
+  <meta charset="UTF-8">
+  <title>Mapeamento Power BI + SQL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Google Fonts: Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600;800&display=swap" rel="stylesheet">
 
-    <!-- Estilos externos -->
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="css/util.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+  <style>
+    body {
+      font-family: 'Nunito', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f7fa;
+      color: #333;
+      text-align: center;
+    }
 
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
+    header {
+      padding: 30px 20px 10px;
+    }
 
-        .project-content {
-            text-align: center;
-            padding: 30px;
-        }
+    header img {
+      max-width: 150px;
+      height: auto;
+    }
 
-        .project-content h2 {
-            font-size: 24px;
-            margin-top: 30px;
-            font-weight: 600;
-        }
+    h1 {
+      font-size: 2.2em;
+      font-weight: 800;
+      margin-top: 20px;
+      color: #2d3e50;
+    }
 
-        .project-content p {
-            font-size: 18px;
-            margin-top: 15px;
-        }
+    p {
+      font-size: 1.1em;
+      font-weight: 300;
+      margin: 20px auto;
+      max-width: 700px;
+      line-height: 1.6;
+    }
 
-        .project-content ul {
-            text-align: left;
-            max-width: 700px;
-            margin: 20px auto;
-            font-size: 16px;
-        }
+    ul {
+      text-align: left;
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 0;
+      list-style: none;
+    }
 
-        .project-content li {
-            margin-bottom: 10px;
-        }
-
-        .login100-pic {
-            display: flex;
-            justify-content: center;
-            margin-top: 40px;
-        }
-
-        .login100-pic img {
-            max-width: 250px;
-        }
-
-        .login100-form-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #333;
-            margin-top: 30px;
-            display: block;
-        }
-
-        .txt1 {
-            font-size: 16px;
-            color: #555;
-        }
-
-        @media (max-width: 768px) {
-            .project-content ul {
-                text-align: left;
-                padding: 0 20px;
-            }
-        }
-    </style>
+    ul li.js-tilt {
+      background: #ffffff;
+      margin: 10px 0;
+      padding: 15px 20px;
+      border-left: 5px solid #007acc;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="limiter">
-        <div class="container-login100">
-            <div class="wrap-login100">
+  <header>
+    <img src="images/img-01.png" alt="Apresentação">
+    <h1>Mapeamento Power BI + SQL</h1>
+  </header>
 
-                <!-- Imagem centralizada -->
-                <div class="login100-pic js-tilt" data-tilt>
-                    <img src="images/img-01.png" alt="Imagem de apresentação">
-                </div>
+  <p>Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.</p>
 
-                <!-- Conteúdo do projeto -->
-                <div class="project-content">
-                    <span class="login100-form-title">
-                        Mapeamento de Relatórios Power BI + SQL
-                    </span>
+  <ul>
+    <li class="js-tilt" data-tilt>📊 Extração das tabelas dos relatórios via Diagnóstico de Desempenho e Power BI Helper</li>
+    <li class="js-tilt" data-tilt>🔍 Identificação dos servidores e bancos de dados de origem</li>
+    <li class="js-tilt" data-tilt>⚙️ Mapeamento de procedures e jobs associadas</li>
+    <li class="js-tilt" data-tilt>📦 Associação com pacotes e projetos ETL</li>
+    <li class="js-tilt" data-tilt>🧪 Verificação de comandos INSERT nas procedures para confirmar as origens dos dados</li>
+  </ul>
 
-                    <p>Este projeto apresenta uma documentação técnica e visual sobre o processo de mapeamento de relatórios corporativos desenvolvidos em Power BI, conectados a fontes de dados via SQL Server e ETL.</p>
+  <!-- Tilt.js via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
+  <script>
+    $('.js-tilt').tilt({
+      scale: 1.05,
+      glare: true,
+      maxGlare: 0.3
+    });
+  </script>
 
-                    <h2>Etapas realizadas:</h2>
-                    <ul>
-                        <li class="js-tilt" data-tilt>Extração das tabelas de relatórios usando Diagnóstico de Desempenho e Power BI Helper</li>
-                        <li class="js-tilt" data-tilt>Identificação dos servidores e bancos de dados de origem</li>
-                        <li class="js-tilt" data-tilt>Mapeamento de procedures e jobs associadas</li>
-                        <li class="js-tilt" data-tilt>Relação com projetos ETL acionados por jobs</li>
-                        <li class="js-tilt" data-tilt>Verificação de comandos INSERT em procedures para validação da origem das tabelas</li>
-                    </ul>
-
-                    <div class="text-center p-t-12">
-                        <span class="txt1">
-                            Se tiver dúvidas ou sugestões, entre em contato!
-                        </span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- Scripts externos -->
-    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-    <script src="vendor/bootstrap/js/popper.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="vendor/select2/select2.min.js"></script>
-    <script src="vendor/tilt/tilt.jquery.min.js"></script>
-    <script>
-        $('.js-tilt').tilt({
-            scale: 1.1
-        })
-    </script>
-    <script src="js/main.js"></script>
 </body>
 </html>
