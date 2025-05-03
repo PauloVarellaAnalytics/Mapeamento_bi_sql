@@ -1,45 +1,68 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Mapeamento Power BI + SQL</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      background-color: #f7f9fc;
-      color: #333;
-    }
-    h1 {
-      color: #2c3e50;
-    }
-    h2 {
-      color: #34495e;
-      margin-top: 30px;
-    }
-    ul {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      max-width: 700px;
-    }
-    li {
-      margin-bottom: 10px;
-      line-height: 1.6;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mapeamento Power BI + SQL</title>
+
+    <!-- Estilos externos -->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-  <h1>Mapeamento de Relatórios Power BI + SQL</h1>
-  <p>Este projeto documenta o processo completo de mapeamento de relatórios em Power BI, envolvendo fontes de dados, servidores, procedures, jobs, e pacotes ETL.</p>
-  <h2>Resumo das etapas:</h2>
-  <ul>
-    <li>Extração das tabelas de relatórios usando Diagnóstico de Desempenho e Power BI Helper</li>
-    <li>Identificação dos servidores e bancos de dados de origem</li>
-    <li>Mapeamento de procedures e jobs associadas</li>
-    <li>Relação com projetos ETL acionados por jobs</li>
-    <li>Verificação de comandos INSERT em procedures para validação da origem das tabelas..........</li>
-  </ul>
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-pic js-tilt" data-tilt>
+                    <img src="images/img-01.png" alt="IMG">
+                </div>
+
+                <!-- Conteúdo do projeto -->
+                <div class="project-content">
+                    <span class="login100-form-title">
+                        Mapeamento de Relatórios Power BI + SQL
+                    </span>
+
+                    <p>Este projeto documenta o processo completo de mapeamento de relatórios em Power BI, envolvendo fontes de dados, servidores, procedures, jobs e pacotes ETL.</p>
+
+                    <h2>Resumo das etapas:</h2>
+                    <ul>
+                        <li>Extração das tabelas de relatórios usando Diagnóstico de Desempenho e Power BI Helper</li>
+                        <li>Identificação dos servidores e bancos de dados de origem</li>
+                        <li>Mapeamento de procedures e jobs associadas</li>
+                        <li>Relação com projetos ETL acionados por jobs</li>
+                        <li>Verificação de comandos INSERT em procedures para validação da origem das tabelas</li>
+                    </ul>
+
+                    <div class="text-center p-t-12">
+                        <span class="txt1">
+                            Se tiver dúvidas, entre em contato!
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts externos -->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/tilt/tilt.jquery.min.js"></script>
+    <script>
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
