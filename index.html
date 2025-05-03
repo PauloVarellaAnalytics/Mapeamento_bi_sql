@@ -98,15 +98,15 @@
   </header>
 
   <p>
-    Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.
+    v1Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.
   </p>
 
   <div class="button-list">
-    <button class="playful-button alternative" data-target="#secao1">📊 Extração das tabelas dos relatórios</button>
-    <button class="playful-button alternative" data-target="#secao2">🔍 Identificação dos servidores e bancos</button>
-    <button class="playful-button alternative" data-target="#secao3">⚙️ Mapeamento de procedures e jobs</button>
-    <button class="playful-button alternative" data-target="#secao4">📦 Associação com pacotes ETL</button>
-    <button class="playful-button alternative" data-target="#secao5">🧪 Verificação de comandos INSERT</button>
+    <button class="button alternative" data-target="#secao1">📊 Extração das tabelas dos relatórios</button>
+    <button class="button alternative" data-target="#secao2">🔍 Identificação dos servidores e bancos</button>
+    <button class="button alternative" data-target="#secao3">⚙️ Mapeamento de procedures e jobs</button>
+    <button class="button alternative" data-target="#secao4">📦 Associação com pacotes ETL</button>
+    <button class="button alternative" data-target="#secao5">🧪 Verificação de comandos INSERT</button>
   </div>
 
   <!-- Seções de conteúdo -->
@@ -138,43 +138,45 @@
   <!-- Script do efeito Playful -->
   <script src="js/Playful.js?v=1"></script>
   <script>
-    document.querySelectorAll('button.playful-button').forEach(button => {
-      let div = document.createElement('div'),
-          letters = button.textContent.trim().split('');
+    // Efeito Playful nos botões
+    document.querySelectorAll('button.button').forEach(button => {
+        let div = document.createElement('div'),
+            letters = button.textContent.trim().split('');
 
-      button.textContent = ''; // limpa o conteúdo original
+        button.textContent = ''; // limpa o conteúdo original
 
-      letters.forEach((letter, index, array) => {
-        let element = document.createElement('span'),
-            part = (index >= array.length / 2) ? -1 : 1,
-            position = (index >= array.length / 2) ? array.length / 2 - index + (array.length / 2 - 1) : index,
-            move = position / (array.length / 2),
-            rotate = 1 - move;
+        letters.forEach((letter, index, array) => {
+            let element = document.createElement('span'),
+                part = (index >= array.length / 2) ? -1 : 1,
+                position = (index >= array.length / 2) ? array.length / 2 - index + (array.length / 2 - 1) : index,
+                move = position / (array.length / 2),
+                rotate = 1 - move;
 
-        element.innerHTML = !letter.trim() ? '&nbsp;' : letter;
-        element.style.setProperty('--move', move);
-        element.style.setProperty('--rotate', rotate);
-        element.style.setProperty('--part', part);
+            element.innerHTML = !letter.trim() ? '&nbsp;' : letter;
+            element.style.setProperty('--move', move);
+            element.style.setProperty('--rotate', rotate);
+            element.style.setProperty('--part', part);
 
-        div.appendChild(element);
-      });
+            div.appendChild(element);
+        });
 
-      button.appendChild(div);
+        button.appendChild(div);
 
-      button.addEventListener('mouseenter', e => {
-        if(!button.classList.contains('out')) {
-          button.classList.add('in');
-        }
-      });
+        button.addEventListener('mouseenter', e => {
+            if(!button.classList.contains('out')) {
+                button.classList.add('in');
+            }
+        });
 
-      button.addEventListener('mouseleave', e => {
-        if(button.classList.contains('in')) {
-          button.classList.add('out');
-          setTimeout(() => button.classList.remove('in', 'out'), 950);
-        }
-      });
+        button.addEventListener('mouseleave', e => {
+            if(button.classList.contains('in')) {
+                button.classList.add('out');
+                setTimeout(() => button.classList.remove('in', 'out'), 950);
+            }
+        });
     });
 
+    // Função para scroll ao clicar no botão
     document.querySelectorAll('.button-list button').forEach(button => {
       button.addEventListener('click', () => {
         const target = document.querySelector(button.dataset.target);
