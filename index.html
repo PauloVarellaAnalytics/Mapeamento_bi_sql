@@ -1,191 +1,78 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mapeamento Power BI + SQL</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600;800&display=swap" rel="stylesheet">
-
-  <!-- Estilo do botão Playful -->
-  <link rel="stylesheet" href="css/Playful.css?v=1">
-
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
-      font-family: 'Nunito', sans-serif;
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
       margin: 0;
-      padding: 0;
-      background-color: #f4f7fa;
-      color: #333;
-    }
-
-    header {
-      padding: 30px 20px 10px;
-      text-align: center;
-    }
-
-    .tilt-img {
-      max-width: 150px;
-      margin: 0 auto;
-      display: block;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     h1 {
-      font-size: 2.2em;
-      font-weight: 800;
-      margin-top: 20px;
-      color: #2d3e50;
-      text-align: center;
+      color: #333;
+      margin-bottom: 2rem;
     }
 
-    p {
-      font-size: 1.1em;
-      font-weight: 300;
-      margin: 20px auto;
-      max-width: 700px;
-      padding: 0 20px;
-      line-height: 1.6;
-      text-align: center;
-    }
-
-    .button-list {
-      max-width: 700px;
-      margin: 20px auto 40px;
-      padding: 0 20px;
+    .button-container {
       display: flex;
-      flex-direction: column;
-      gap: 15px;
+      gap: 2rem;
     }
 
-    section {
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 20px;
-      background: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    .animated-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.8rem 1.6rem;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.3s ease;
     }
 
-    section h2 {
-      margin-top: 0;
-      color: #007acc;
+    .animated-button svg {
+      width: 20px;
+      height: 20px;
+      fill: white;
+      transition: transform 0.3s ease;
     }
 
-    @media (max-width: 480px) {
-      p, .button-list {
-        padding-left: 15px;
-        padding-right: 15px;
-      }
+    .animated-button:hover {
+      background-color: #45a049;
+    }
+
+    .animated-button:hover svg {
+      transform: translateX(5px);
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <div>
-      <img src="images/img-01.png?v=1" alt="Apresentação" class="tilt-img">
-    </div>
-    <h1>Mapeamento Power BI + SQL</h1>
-  </header>
-
-  <p>
-    v1Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.
-  </p>
-
-  <div class="button-list">
-    <button class="button alternative" data-target="#secao1">📊 Extração das tabelas dos relatórios</button>
-    <button class="button alternative" data-target="#secao2">🔍 Identificação dos servidores e bancos</button>
-    <button class="button alternative" data-target="#secao3">⚙️ Mapeamento de procedures e jobs</button>
-    <button class="button alternative" data-target="#secao4">📦 Associação com pacotes ETL</button>
-    <button class="button alternative" data-target="#secao5">🧪 Verificação de comandos INSERT</button>
+  <h1>Mapeamento Power BI + SQL</h1>
+  <div class="button-container">
+    <button class="animated-button">
+      Power BI
+      <svg viewBox="0 0 24 24">
+        <path d="M10 17l5-5-5-5v10z"/>
+      </svg>
+    </button>
+    <button class="animated-button">
+      SQL
+      <svg viewBox="0 0 24 24">
+        <path d="M10 17l5-5-5-5v10z"/>
+      </svg>
+    </button>
   </div>
-
-  <!-- Seções de conteúdo -->
-  <section id="secao1">
-    <h2>📊 Extração das tabelas dos relatórios</h2>
-    <p>Aqui você irá inserir o conteúdo referente a extração das tabelas via Diagnóstico de Desempenho e Power BI Helper.</p>
-  </section>
-
-  <section id="secao2">
-    <h2>🔍 Identificação dos servidores e bancos</h2>
-    <p>Conteúdo relacionado à identificação dos servidores e bancos de dados de origem.</p>
-  </section>
-
-  <section id="secao3">
-    <h2>⚙️ Mapeamento de procedures e jobs</h2>
-    <p>Conteúdo sobre o mapeamento das procedures e jobs associadas aos relatórios.</p>
-  </section>
-
-  <section id="secao4">
-    <h2>📦 Associação com pacotes ETL</h2>
-    <p>Conteúdo sobre a associação com pacotes e projetos ETL (Integration Services, etc).</p>
-  </section>
-
-  <section id="secao5">
-    <h2>🧪 Verificação de comandos INSERT</h2>
-    <p>Conteúdo sobre a verificação de comandos INSERT nas procedures para confirmar as origens dos dados.</p>
-  </section>
-
-  <!-- Script do efeito Playful -->
-  <script src="js/Playful.js?v=1"></script>
-  <script>
-    // Efeito Playful nos botões
-    document.querySelectorAll('button.button').forEach(button => {
-        let div = document.createElement('div'),
-            letters = button.textContent.trim().split('');
-
-        button.textContent = ''; // limpa o conteúdo original
-
-        letters.forEach((letter, index, array) => {
-            let element = document.createElement('span'),
-                part = (index >= array.length / 2) ? -1 : 1,
-                position = (index >= array.length / 2) ? array.length / 2 - index + (array.length / 2 - 1) : index,
-                move = position / (array.length / 2),
-                rotate = 1 - move;
-
-            element.innerHTML = !letter.trim() ? '&nbsp;' : letter;
-            element.style.setProperty('--move', move);
-            element.style.setProperty('--rotate', rotate);
-            element.style.setProperty('--part', part);
-
-            div.appendChild(element);
-        });
-
-        button.appendChild(div);
-
-        button.addEventListener('mouseenter', e => {
-            if(!button.classList.contains('out')) {
-                button.classList.add('in');
-            }
-        });
-
-        button.addEventListener('mouseleave', e => {
-            if(button.classList.contains('in')) {
-                button.classList.add('out');
-                setTimeout(() => button.classList.remove('in', 'out'), 950);
-            }
-        });
-    });
-
-    // Função para scroll ao clicar no botão
-    document.querySelectorAll('.button-list button').forEach(button => {
-      button.addEventListener('click', () => {
-        const target = document.querySelector(button.dataset.target);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-  </script>
-
 </body>
 </html>
