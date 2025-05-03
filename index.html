@@ -8,7 +8,7 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600;800&display=swap" rel="stylesheet">
 
-  <!-- Evita cache forçando atualização com ?v=1 -->
+  <!-- Evita cache forçando atualização -->
   <link rel="stylesheet" href="style.css?v=1">
 
   <style>
@@ -56,23 +56,39 @@
     ul {
       max-width: 700px;
       margin: 20px auto;
-      padding: 0 20px;
+      padding: 0 20px 40px;
       list-style: none;
     }
 
     ul li.js-tilt {
       background: #ffffff;
-      margin: 10px 0;
+      margin: 12px 0;
       padding: 15px 20px;
       border-left: 5px solid #007acc;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
-      transition: transform 0.2s ease, border-color 0.3s ease;
+      transition: 
+        transform 0.2s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
       cursor: pointer;
     }
-    
+
     ul li.js-tilt:hover {
       border-left-color: #ff9900; /* laranja */
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (max-width: 480px) {
+      ul li.js-tilt {
+        margin: 14px 0;
+        padding: 15px;
+      }
+
+      p, ul {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
     }
   </style>
 </head>
@@ -86,7 +102,7 @@
   </header>
 
   <p>
-    ...Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.
+    .Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.
   </p>
 
   <ul>
@@ -97,8 +113,8 @@
     <li class="js-tilt" data-tilt>🧪 Verificação de comandos INSERT nas procedures para confirmar as origens dos dados</li>
   </ul>
 
-  <!-- Tilt.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+  <!-- Tilt.js com controle de cache -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js?v=1"></script>
   <script>
     VanillaTilt.init(document.querySelectorAll(".js-tilt"), {
       max: 15,
