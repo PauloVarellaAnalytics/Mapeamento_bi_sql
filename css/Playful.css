@@ -1,19 +1,15 @@
-.button {
-  // Variações de tema
-  &.alternative {
-    --color-hover: #2B3044;
-    --background: #362A89;
-    --hover-back: #6D58FF;
-    --hover-front: #F6F8FF;
-  }
-
-  &.simple {
-    --background: #275EFE;
-    --background-hover: #1749DB;
-  }
+.button.alternative {
+  --color-hover: #2B3044;
+  --background: #362A89;
+  --hover-back: #6D58FF;
+  --hover-front: #F6F8FF;
 }
 
-// Estilo base do botão
+.button.simple {
+  --background: #275EFE;
+  --background-hover: #1749DB;
+}
+
 .button {
   --color: #fff;
   --color-hover: var(--color);
@@ -39,84 +35,80 @@
   color: var(--c, var(--color));
   background: var(--b, var(--background));
   transition: color .2s linear var(--c-d, .2s), background .3s linear var(--b-d, .2s);
-
-  &:not(.simple) {
-    &:before,
-    &:after {
-      content: '';
-      position: absolute;
-      background: var(--pb, var(--hover-back));
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 200%;
-      border-radius: var(--br, 40%);
-      transform: translateY(var(--y, 50%));
-      transition: transform var(--d, .4s) ease-in var(--d-d, 0s), border-radius .5s ease var(--br-d, .08s);
-    }
-
-    &:after {
-      --pb: var(--hover-front);
-      --d: .44s;
-    }
-  }
-
-  // Parte onde integramos o efeito Playful ↓↓↓
-  div {
-    z-index: 1;
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-
-    span {
-      display: inline-block;
-      backface-visibility: hidden;
-      transform: translateZ(0);
-      transition: transform 0.35s cubic-bezier(.5,1.7,.4,.7);
-      transform-origin: center;
-      animation: var(--name, none) .7s linear forwards .18s;
-    }
-  }
-
-  &.in {
-    --name: move;
-
-    &:not(.out) {
-      --c: var(--color-hover);
-      --b: var(--background-hover);
-
-      &:before,
-      &:after {
-        --y: 0;
-        --br: 5%;
-      }
-
-      &:after {
-        --br: 10%;
-        --d-d: .02s;
-      }
-    }
-
-    &.out {
-      --name: move-out;
-
-      &:before {
-        --d-d: .06s;
-      }
-    }
-
-    span {
-      transform: translateY(calc(var(--part) * -1 * 100%)) rotate(calc(var(--part) * var(--rotate) * 15deg));
-    }
-  }
-
-  &.out span {
-    transition-timing-function: cubic-bezier(.5,-0.7,.4,.3);
-    transform: translateY(0) rotate(0);
-  }
 }
 
-// Keyframes do efeito Playful
+.button:not(.simple):before,
+.button:not(.simple):after {
+  content: '';
+  position: absolute;
+  background: var(--pb, var(--hover-back));
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200%;
+  border-radius: var(--br, 40%);
+  transform: translateY(var(--y, 50%));
+  transition: transform var(--d, .4s) ease-in var(--d-d, 0s), border-radius .5s ease var(--br-d, .08s);
+}
+
+.button:not(.simple):after {
+  --pb: var(--hover-front);
+  --d: .44s;
+}
+
+.button div {
+  z-index: 1;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.button div span {
+  display: inline-block;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  transition: transform 0.35s cubic-bezier(.5,1.7,.4,.7);
+  transform-origin: center;
+  animation: var(--name, none) .7s linear forwards .18s;
+}
+
+.button.in {
+  --name: move;
+}
+
+.button.in:not(.out) {
+  --c: var(--color-hover);
+  --b: var(--background-hover);
+}
+
+.button.in:not(.out):before,
+.button.in:not(.out):after {
+  --y: 0;
+  --br: 5%;
+}
+
+.button.in:not(.out):after {
+  --br: 10%;
+  --d-d: .02s;
+}
+
+.button.in span {
+  transform: translateY(calc(var(--part) * -1 * 100%)) rotate(calc(var(--part) * var(--rotate) * 15deg));
+}
+
+.button.in.out {
+  --name: move-out;
+}
+
+.button.in.out:before {
+  --d-d: .06s;
+}
+
+.button.in.out span {
+  transition-timing-function: cubic-bezier(.5,-0.7,.4,.3);
+  transform: translateY(0) rotate(0);
+}
+
 @keyframes move {
   30%, 36% {
     transform: translateY(calc(-6px * var(--move))) translateZ(0) rotate(calc(-13deg * var(--rotate) * var(--part)));
@@ -145,73 +137,11 @@
   }
 }
 
-// Reset e responsividade
 html {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
 }
 
-* {
+*, *:before, *:after {
   box-sizing: inherit;
-
-  &:before,
-  &:after {
-    box-sizing: inherit;
-  }
-}
-
-// Layout e centralização
-body {
-  min-height: 100vh;
-  display: flex;
-  font-family: 'Inter UI', 'Inter', Arial;
-  justify-content: center;
-  align-items: center;
-  background: #E1E6F9;
-
-  @media(max-width: 440px) {
-    flex-direction: column;
-  }
-
-  .button {
-    display: block;
-    margin: 0 8px;
-
-    &:first-child {
-      margin-left: 0;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-
-    @media(max-width: 440px) {
-      margin: 8px 0;
-    }
-  }
-
-  .dribbble {
-    position: fixed;
-    display: block;
-    right: 20px;
-    bottom: 20px;
-
-    img {
-      display: block;
-      height: 28px;
-    }
-  }
-
-  .twitter {
-    position: fixed;
-    display: block;
-    right: 64px;
-    bottom: 14px;
-
-    svg {
-      width: 32px;
-      height: 32px;
-      fill: #1da1f2;
-    }
-  }
 }
