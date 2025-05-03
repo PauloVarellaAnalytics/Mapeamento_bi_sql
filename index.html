@@ -1,56 +1,56 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>Mapeamento Power BI + SQL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f0f2f5;
+      background-color: #f1f4f9;
       margin: 0;
       padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
 
     h1 {
       color: #333;
-      margin-bottom: 2rem;
+      text-align: center;
     }
 
     .button-container {
       display: flex;
-      gap: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
     }
 
     .animated-button {
+      position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 0.8rem 1.6rem;
-      background-color: #4CAF50;
+      justify-content: center;
+      background-color: #0057b8;
       color: white;
-      font-size: 1rem;
-      font-weight: bold;
+      padding: 0.75em 1.75em;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
-      position: relative;
+      font-weight: bold;
       overflow: hidden;
+      text-decoration: none;
       transition: background-color 0.3s ease;
     }
 
-    .animated-button svg {
-      width: 20px;
-      height: 20px;
-      fill: white;
-      transition: transform 0.3s ease;
+    .animated-button:hover {
+      background-color: #004095;
     }
 
-    .animated-button:hover {
-      background-color: #45a049;
+    .animated-button svg {
+      margin-left: 0.5em;
+      width: 1em;
+      height: 1em;
+      transition: transform 0.3s ease;
     }
 
     .animated-button:hover svg {
@@ -59,20 +59,34 @@
   </style>
 </head>
 <body>
+
   <h1>Mapeamento Power BI + SQL</h1>
+
   <div class="button-container">
-    <button class="animated-button">
-      Power BI
-      <svg viewBox="0 0 24 24">
-        <path d="M10 17l5-5-5-5v10z"/>
+    <a href="mapeamento1.html" class="animated-button">
+      Mapeamento 1
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
-    </button>
-    <button class="animated-button">
-      SQL
-      <svg viewBox="0 0 24 24">
-        <path d="M10 17l5-5-5-5v10z"/>
+    </a>
+
+    <a href="mapeamento2.html" class="animated-button">
+      Mapeamento 2
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
-    </button>
+    </a>
+
+    <a href="mapeamento3.html" class="animated-button">
+      Mapeamento 3
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </a>
   </div>
+
 </body>
 </html>
