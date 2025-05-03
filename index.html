@@ -8,23 +8,31 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600;800&display=swap" rel="stylesheet">
 
+  <!-- Evita cache forçando atualização com ?v=1 -->
+  <link rel="stylesheet" href="style.css?v=1">
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Nunito', sans-serif;
       margin: 0;
       padding: 0;
       background-color: #f4f7fa;
       color: #333;
-      text-align: center;
     }
 
     header {
       padding: 30px 20px 10px;
+      text-align: center;
     }
 
-    header img {
+    .tilt-img {
       max-width: 150px;
-      height: auto;
+      margin: 0 auto;
+      display: block;
     }
 
     h1 {
@@ -32,6 +40,7 @@
       font-weight: 800;
       margin-top: 20px;
       color: #2d3e50;
+      text-align: center;
     }
 
     p {
@@ -39,14 +48,15 @@
       font-weight: 300;
       margin: 20px auto;
       max-width: 700px;
+      padding: 0 20px;
       line-height: 1.6;
+      text-align: center;
     }
 
     ul {
-      text-align: left;
       max-width: 700px;
       margin: 20px auto;
-      padding: 0;
+      padding: 0 20px;
       list-style: none;
     }
 
@@ -65,11 +75,15 @@
 <body>
 
   <header>
-    <img src="images/img-01.png" alt="Apresentação">
+    <div class="js-tilt" data-tilt>
+      <img src="images/img-01.png?v=1" alt="Apresentação" class="tilt-img">
+    </div>
     <h1>Mapeamento Power BI + SQL</h1>
   </header>
 
-  <p>Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.</p>
+  <p>
+    Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.
+  </p>
 
   <ul>
     <li class="js-tilt" data-tilt>📊 Extração das tabelas dos relatórios via Diagnóstico de Desempenho e Power BI Helper</li>
@@ -79,13 +93,14 @@
     <li class="js-tilt" data-tilt>🧪 Verificação de comandos INSERT nas procedures para confirmar as origens dos dados</li>
   </ul>
 
-  <!-- Tilt.js via CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
+  <!-- Tilt.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
   <script>
-    $('.js-tilt').tilt({
-      scale: 1.05,
+    VanillaTilt.init(document.querySelectorAll(".js-tilt"), {
+      max: 15,
+      speed: 400,
       glare: true,
-      maxGlare: 0.3
+      "max-glare": 0.2
     });
   </script>
 
