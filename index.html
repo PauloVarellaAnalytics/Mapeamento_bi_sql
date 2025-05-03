@@ -4,7 +4,11 @@
   <meta charset="UTF-8">
   <title>Mapeamento Power BI + SQL</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600;800&display=swap" rel="stylesheet">
+
+  <!-- Evita cache forçando atualização -->
   <link rel="stylesheet" href="style.css?v=1">
 
   <style>
@@ -49,55 +53,42 @@
       text-align: center;
     }
 
-    .step {
+    ul {
       max-width: 700px;
       margin: 20px auto;
-      padding: 0 20px;
+      padding: 0 20px 40px;
+      list-style: none;
     }
 
-    .step-title {
+    ul li.js-tilt {
       background: #ffffff;
-      margin: 10px 0;
+      margin: 12px 0;
       padding: 15px 20px;
       border-left: 5px solid #007acc;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
-      transition: transform 0.2s ease, border-color 0.3s ease;
+      transition: 
+        transform 0.2s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
       cursor: pointer;
-      font-weight: 600;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
 
-    .step-title:hover {
-      border-left-color: #ff9900;
+    ul li.js-tilt:hover {
+      border-left-color: #ff9900; /* laranja */
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
 
-    .step-content {
-      background: #ffffff;
-      margin-top: 5px;
-      padding: 15px 20px;
-      border-radius: 0 0 8px 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-      display: none;
-    }
+    @media (max-width: 480px) {
+      ul li.js-tilt {
+        margin: 14px 0;
+        padding: 15px;
+      }
 
-    .arrow {
-      font-size: 1.2em;
-      transition: transform 0.3s ease;
-    }
-
-    .step-title.active .arrow {
-      transform: rotate(180deg);
-    }
-
-    pre {
-      background: #f0f0f0;
-      padding: 10px;
-      overflow-x: auto;
-      border-radius: 5px;
-      font-size: 0.9em;
+      p, ul {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
     }
   </style>
 </head>
@@ -111,80 +102,25 @@
   </header>
 
   <p>
-    Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.
+    .Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.
   </p>
 
-  <div class="step">
-    <div class="step-title js-tilt" data-tilt>
-      📊 Extração das tabelas dos relatórios via Diagnóstico de Desempenho e Power BI Helper
-      <span class="arrow">▼</span>
-    </div>
-    <div class="step-content">
-      <p>Esta etapa consiste em obter todas as tabelas utilizadas no relatório, utilizando as ferramentas nativas do Power BI (Diagnóstico de Desempenho) ou a ferramenta Power BI Helper, com exportação de metadados.</p>
-      <pre>// Aqui você poderá inserir os códigos SQL utilizados nesta etapa</pre>
-    </div>
-  </div>
+  <ul>
+    <li class="js-tilt" data-tilt>📊 Extração das tabelas dos relatórios via Diagnóstico de Desempenho e Power BI Helper</li>
+    <li class="js-tilt" data-tilt>🔍 Identificação dos servidores e bancos de dados de origem</li>
+    <li class="js-tilt" data-tilt>⚙️ Mapeamento de procedures e jobs associadas</li>
+    <li class="js-tilt" data-tilt>📦 Associação com pacotes e projetos ETL</li>
+    <li class="js-tilt" data-tilt>🧪 Verificação de comandos INSERT nas procedures para confirmar as origens dos dados</li>
+  </ul>
 
-  <div class="step">
-    <div class="step-title js-tilt" data-tilt>
-      🔍 Identificação dos servidores e bancos de dados de origem
-      <span class="arrow">▼</span>
-    </div>
-    <div class="step-content">
-      <p>Com as tabelas extraídas, é feita a verificação da origem dos dados, identificando os servidores, bancos de dados e os ambientes (nuvem ou on-premises).</p>
-      <pre>// Aqui você poderá inserir os códigos SQL utilizados nesta etapa</pre>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="step-title js-tilt" data-tilt>
-      ⚙️ Mapeamento de procedures e jobs associadas
-      <span class="arrow">▼</span>
-    </div>
-    <div class="step-content">
-      <p>Busca por procedures que referenciem as tabelas dos relatórios. Em seguida, essas procedures são associadas aos jobs que as executam periodicamente.</p>
-      <pre>// Aqui você poderá inserir os códigos SQL utilizados nesta etapa</pre>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="step-title js-tilt" data-tilt>
-      📦 Associação com pacotes e projetos ETL
-      <span class="arrow">▼</span>
-    </div>
-    <div class="step-content">
-      <p>Identificação de quais jobs disparam pacotes e projetos SSIS ou outros processos ETL responsáveis pela carga das tabelas.</p>
-      <pre>// Aqui você poderá inserir os códigos SQL utilizados nesta etapa</pre>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="step-title js-tilt" data-tilt>
-      🧪 Verificação de comandos INSERT nas procedures
-      <span class="arrow">▼</span>
-    </div>
-    <div class="step-content">
-      <p>Análise das procedures para confirmar se realizam INSERT nas tabelas dos relatórios, validando a origem final dos dados.</p>
-      <pre>// Aqui você poderá inserir os códigos SQL utilizados nesta etapa</pre>
-    </div>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+  <!-- Tilt.js com controle de cache -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js?v=1"></script>
   <script>
     VanillaTilt.init(document.querySelectorAll(".js-tilt"), {
       max: 15,
       speed: 400,
       glare: true,
       "max-glare": 0.2
-    });
-
-    // Função para expandir/contrair os blocos
-    document.querySelectorAll(".step-title").forEach(title => {
-      title.addEventListener("click", () => {
-        const content = title.nextElementSibling;
-        const isActive = title.classList.toggle("active");
-        content.style.display = isActive ? "block" : "none";
-      });
     });
   </script>
 
