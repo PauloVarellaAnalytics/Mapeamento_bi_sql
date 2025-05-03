@@ -102,11 +102,11 @@
   </p>
 
   <div class="button-list">
-    <a href="#secao1"><button class="button">📊 Extração das tabelas dos relatórios</button></a>
-    <a href="#secao2"><button class="button">🔍 Identificação dos servidores e bancos</button></a>
-    <a href="#secao3"><button class="button">⚙️ Mapeamento de procedures e jobs</button></a>
-    <a href="#secao4"><button class="button">📦 Associação com pacotes ETL</button></a>
-    <a href="#secao5"><button class="button">🧪 Verificação de comandos INSERT</button></a>
+    <button class="button" data-target="#secao1">📊 Extração das tabelas dos relatórios</button>
+    <button class="button" data-target="#secao2">🔍 Identificação dos servidores e bancos</button>
+    <button class="button" data-target="#secao3">⚙️ Mapeamento de procedures e jobs</button>
+    <button class="button" data-target="#secao4">📦 Associação com pacotes ETL</button>
+    <button class="button" data-target="#secao5">🧪 Verificação de comandos INSERT</button>
   </div>
 
   <!-- Seções de conteúdo -->
@@ -138,6 +138,7 @@
   <!-- Script do efeito Playful -->
   <script src="js/Playful.js?v=1"></script>
   <script>
+    // Efeito Playful nos botões
     document.querySelectorAll('button.button').forEach(button => {
         let div = document.createElement('div'),
             letters = button.textContent.trim().split('');
@@ -173,6 +174,16 @@
                 setTimeout(() => button.classList.remove('in', 'out'), 950);
             }
         });
+    });
+
+    // Função para scroll ao clicar no botão
+    document.querySelectorAll('.button-list button').forEach(button => {
+      button.addEventListener('click', () => {
+        const target = document.querySelector(button.dataset.target);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
     });
   </script>
 
