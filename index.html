@@ -10,6 +10,7 @@
 
   <!-- Evita cache forçando atualização -->
   <link rel="stylesheet" href="style.css?v=1">
+  <link rel="stylesheet" href="Playful.css?v=1">
 
   <style>
     * {
@@ -60,7 +61,7 @@
       list-style: none;
     }
 
-    ul li.js-tilt {
+    ul li.playful {
       background: #ffffff;
       margin: 12px 0;
       padding: 15px 20px;
@@ -68,19 +69,28 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
       transition: 
-        transform 0.2s ease,
         border-color 0.4s ease,
         box-shadow 0.4s ease;
       cursor: pointer;
+
+      /* Herdando estilo base do botão */
+      --color: #333;
+      --color-hover: var(--color);
+      --background: #ffffff;
+      --background-hover: #f0f0f0;
+      --hover-back: #6D58FF;
+      --hover-front: #F6F8FF;
+      position: relative;
+      overflow: hidden;
     }
 
-    ul li.js-tilt:hover {
+    ul li.playful:hover {
       border-left-color: #ff9900; /* laranja */
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
 
     @media (max-width: 480px) {
-      ul li.js-tilt {
+      ul li.playful {
         margin: 14px 0;
         padding: 15px;
       }
@@ -95,36 +105,64 @@
 <body>
 
   <header>
-    <div class="js-tilt" data-tilt>
+    <div>
       <img src="images/img-01.png?v=1" alt="Apresentação" class="tilt-img">
     </div>
     <h1>Mapeamento Power BI + SQL</h1>
   </header>
 
   <p>
-    ..Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.
+    Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.
   </p>
 
   <ul>
-    <li class="js-tilt" data-tilt>📊 Extração das tabelas dos relatórios via Diagnóstico de Desempenho e Power BI Helper</li>
-    <li class="js-tilt" data-tilt>🔍 Identificação dos servidores e bancos de dados de origem</li>
-    <li class="js-tilt" data-tilt>⚙️ Mapeamento de procedures e jobs associadas</li>
-    <li class="js-tilt" data-tilt>📦 Associação com pacotes e projetos ETL</li>
-    <li class="js-tilt" data-tilt>🧪 Verificação de comandos INSERT nas procedures para confirmar as origens dos dados</li>
+    <li class="playful">📊 Extração das tabelas dos relatórios via Diagnóstico de Desempenho e Power BI Helper</li>
+    <li class="playful">🔍 Identificação dos servidores e bancos de dados de origem</li>
+    <li class="playful">⚙️ Mapeamento de procedures e jobs associadas</li>
+    <li class="playful">📦 Associação com pacotes e projetos ETL</li>
+    <li class="playful">🧪 Verificação de comandos INSERT nas procedures para confirmar as origens dos dados</li>
   </ul>
 
-  <!-- Tilt.js com controle de cache -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js?v=1"></script>
+  <!-- Playful hover -->
+  <script src="Playful.js?v=1"></script>
   <script>
-    VanillaTilt.init(document.querySelectorAll(".js-tilt"), {
-      max: 15,
-      speed: 400,
-      glare: true,
-      "max-glare": 0.2
+    document.querySelectorAll('li.playful').forEach(item => {
+        let div = document.createElement('div'),
+            letters = item.textContent.trim().split('');
+
+        item.textContent = ''; // limpa o conteúdo original
+
+        letters.forEach((letter, index, array) => {
+            let element = document.createElement('span'),
+                part = (index >= array.length / 2) ? -1 : 1,
+                position = (index >= array.length / 2) ? array.length / 2 - index + (array.length / 2 - 1) : index,
+                move = position / (array.length / 2),
+                rotate = 1 - move;
+
+            element.innerHTML = !letter.trim() ? '&nbsp;' : letter;
+            element.style.setProperty('--move', move);
+            element.style.setProperty('--rotate', rotate);
+            element.style.setProperty('--part', part);
+
+            div.appendChild(element);
+        });
+
+        item.appendChild(div);
+
+        item.addEventListener('mouseenter', e => {
+            if(!item.classList.contains('out')) {
+                item.classList.add('in');
+            }
+        });
+
+        item.addEventListener('mouseleave', e => {
+            if(item.classList.contains('in')) {
+                item.classList.add('out');
+                setTimeout(() => item.classList.remove('in', 'out'), 950);
+            }
+        });
     });
   </script>
 
 </body>
 </html>
-
-
