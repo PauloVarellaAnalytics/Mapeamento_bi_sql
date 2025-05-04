@@ -14,6 +14,6 @@ document.querySelectorAll('.js-tilt').forEach((button, index) => {
       if (targetCard) {
         targetCard.scrollIntoView({ behavior: 'smooth' });
       }
-    }, 1000);
+    }, 500);
   });
 });
