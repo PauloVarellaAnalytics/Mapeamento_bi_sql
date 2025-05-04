@@ -4,96 +4,12 @@
   <meta charset="UTF-8">
   <title>Mapeamento Power BI + SQL</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600;800&display=swap" rel="stylesheet">
-
-  <!-- Evita cache forçando atualização -->
-  <link rel="stylesheet" href="style.css?v=1">
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Nunito', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f7fa;
-      color: #333;
-    }
-
-    header {
-      padding: 30px 20px 10px;
-      text-align: center;
-    }
-
-    .tilt-img {
-      max-width: 150px;
-      margin: 0 auto;
-      display: block;
-    }
-
-    h1 {
-      font-size: 2.2em;
-      font-weight: 800;
-      margin-top: 20px;
-      color: #2d3e50;
-      text-align: center;
-    }
-
-    p {
-      font-size: 1.1em;
-      font-weight: 300;
-      margin: 20px auto;
-      max-width: 700px;
-      padding: 0 20px;
-      line-height: 1.6;
-      text-align: center;
-    }
-
-    ul {
-      max-width: 700px;
-      margin: 20px auto;
-      padding: 0 20px 40px;
-      list-style: none;
-    }
-
-    ul li.js-tilt {
-      background: #ffffff;
-      margin: 12px 0;
-      padding: 15px 20px;
-      border-left: 5px solid #007acc;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      transition: 
-        transform 0.2s ease,
-        border-color 0.4s ease,
-        box-shadow 0.4s ease;
-      cursor: pointer;
-    }
-
-    ul li.js-tilt:hover {
-      border-left-color: #ff9900; /* laranja */
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    @media (max-width: 480px) {
-      ul li.js-tilt {
-        margin: 14px 0;
-        padding: 15px;
-      }
-
-      p, ul {
-        padding-left: 15px;
-        padding-right: 15px;
-      }
-    }
-  </style>
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-
   <header>
     <div class="js-tilt" data-tilt>
       <img src="images/img-01.png?v=1" alt="Apresentação" class="tilt-img">
@@ -102,27 +18,142 @@
   </header>
 
   <p>
-    .Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.
+    Bem-vindo! Este projeto tem como objetivo documentar de forma clara e completa o processo de mapeamento de relatórios criados no Power BI com base em dados provenientes do SQL Server.
   </p>
 
-  <ul>
-    <li class="js-tilt" data-tilt>📊 Extração das tabelas dos relatórios via Diagnóstico de Desempenho e Power BI Helper</li>
-    <li class="js-tilt" data-tilt>🔍 Identificação dos servidores e bancos de dados de origem</li>
-    <li class="js-tilt" data-tilt>⚙️ Mapeamento de procedures e jobs associadas</li>
-    <li class="js-tilt" data-tilt>📦 Associação com pacotes e projetos ETL</li>
-    <li class="js-tilt" data-tilt>🧪 Verificação de comandos INSERT nas procedures para confirmar as origens dos dados</li>
-  </ul>
+  <div class="button-container">
+    <button class="js-tilt icon-slide-left" data-tilt data-emoji="📊">
+      <div class="number"><strong>1º</strong></div>
+      <div class="phrase">Extração das tabelas dos relatórios via Diagnóstico de Desempenho e Power BI Helper</div>
+    </button>
+    <button class="js-tilt icon-slide-left" data-tilt data-emoji="🔍">
+      <div class="number"><strong>2º</strong></div>
+      <div class="phrase">Identificação dos servidores e bancos de dados de origem</div>
+    </button>
+    <button class="js-tilt icon-slide-left" data-tilt data-emoji="⚙️">
+      <div class="number"><strong>3º</strong></div>
+      <div class="phrase">Mapeamento de procedures e jobs associadas</div>
+    </button>
+    <button class="js-tilt icon-slide-left" data-tilt data-emoji="📦">
+      <div class="number"><strong>4º</strong></div>
+      <div class="phrase">Associação com pacotes e projetos ETL</div>
+    </button>
+    <button class="js-tilt icon-slide-left" data-tilt data-emoji="🧪">
+      <div class="number"><strong>5º</strong></div>
+      <div class="phrase">Verificação de comandos INSERT nas procedures para confirmar as origens dos dados</div>
+    </button>
+  </div>
 
-  <!-- Tilt.js com controle de cache -->
+  <div class="content-container">
+    <div class="content-card">
+      <h2>1. Visão Geral da Atividade</h2>
+      <p>
+        A atividade iniciou com o recebimento de uma planilha contendo os relatórios que deveriam ser mapeados. As informações requeridas incluíam:
+      </p>
+      <ul>
+        <li>Tabelas utilizadas no relatório</li>
+        <li>Fontes de dados/origens</li>
+        <li>Setor responsável (ex: Engenharia - caminho DALL·E)</li>
+        <li>Procedures associadas</li>
+        <li>Jobs relacionadas</li>
+        <li>Projeto ETL envolvido (SSIS)</li>
+        <li>Horário de atualização</li>
+        <li>Ambiente: On-premises ou Cloud (Azure)</li>
+      </ul>
+    </div>
+
+    <div class="content-card">
+      <h2>2. Métodos Utilizados para Identificação de Tabelas</h2>
+      <h3>2.1. Método 1 – Diagnóstico no Power BI (sem software adicional)</h3>
+      <ul>
+        <li>Acesso ao modo Transformar Dados</li>
+        <li>Ativação do recurso Iniciar Diagnóstico</li>
+        <li>Carregamento completo das tabelas</li>
+        <li>Parar diagnóstico e capturar as informações de origem</li>
+        <li>Inserção em visual de tabela no relatório</li>
+        <li>Exportação para Excel</li>
+        <li>Organização com auxílio do ChatGPT</li>
+      </ul>
+      <h3>2.2. Método 2 – Power BI Helper</h3>
+      <ul>
+        <li>Exportação dos metadados na tela inicial</li>
+        <li>Utilização do arquivo Tables_...</li>
+        <li>Leitura da primeira coluna (origens das tabelas)</li>
+        <li>Uso de VBA para extrair campos como:</li>
+        <li>Nome da tabela</li>
+        <li>Fonte (ex: Azure, SharePoint)</li>
+        <li>Caminhos</li>
+        <li>Útil para relatórios grandes com múltiplas tabelas</li>
+      </ul>
+    </div>
+
+    <div class="content-card">
+      <h2>3. Identificação do Servidor de Origem</h2>
+      <p>Foi criado um script que:</p>
+      <ul>
+        <li>Percorre todos os bancos do servidor</li>
+        <li>Retorna o nome do banco, da tabela e do servidor</li>
+        <li>Resultado exportado para Excel</li>
+        <li>Utilização de PROCV para preencher automaticamente a planilha de mapeamento com essa informação</li>
+      </ul>
+    </div>
+
+    <div class="content-card">
+      <h2>4. Mapeamento de Procedures</h2>
+      <p>Criação de um script que percorre todas as procedures dos bancos:</p>
+      <ul>
+        <li>Localiza menções às tabelas utilizadas nos relatórios</li>
+        <li>Verificação se há INSERT INTO, sinalizando origem/consolidação dos dados</li>
+        <li>Permite rastrear quais procedures alimentam ou manipulam as tabelas usadas no Power BI</li>
+      </ul>
+    </div>
+
+    <div class="content-card">
+      <h2>5. Mapeamento de Jobs e Projetos ETL</h2>
+      <h3>5.1. Join entre Jobs e ETLs</h3>
+      <ul>
+        <li>Relacionamento entre jobs e pacotes SSIS ou outros projetos ETL</li>
+        <li>Identificação dos jobs responsáveis por acionar projetos de transformação de dados</li>
+      </ul>
+      <h3>5.2. Join entre Jobs e Procedures</h3>
+      <ul>
+        <li>Cruzamento entre jobs e as procedures que elas executam</li>
+        <li>Permite rastrear a cadeia de execução de forma clara</li>
+      </ul>
+      <h3>5.3. Consolidação de Jobs</h3>
+      <p>Tabela final contendo:</p>
+      <ul>
+        <li>Nome da job</li>
+        <li>Todos os steps (comandos de execução)</li>
+        <li>Se o step aciona procedure ou pacote ETL</li>
+        <li>Proporciona rastreabilidade completa do fluxo de execução de cada job</li>
+      </ul>
+    </div>
+
+    <div class="content-card">
+      <h2>6. Benefícios da Solução</h2>
+      <ul>
+        <li>Automatização do mapeamento e redução de erros manuais</li>
+        <li>Visão unificada do pipeline de dados</li>
+        <li>Agilidade na resolução de problemas (ex: dados inconsistentes)</li>
+        <li>Transparência e governança dos relatórios</li>
+        <li>Base reutilizável para novos projetos e auditorias técnicas</li>
+      </ul>
+    </div>
+
+    <div class="content-card">
+      <h2>7. Próximos Passos</h2>
+      <ul>
+        <li>Inserção dos scripts utilizados (a serem adicionados posteriormente)</li>
+        <li>Criação de templates reutilizáveis</li>
+        <li>Versão padronizada para uso em treinamentos internos</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tilt.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js?v=1"></script>
-  <script>
-    VanillaTilt.init(document.querySelectorAll(".js-tilt"), {
-      max: 15,
-      speed: 400,
-      glare: true,
-      "max-glare": 0.2
-    });
-  </script>
-
+  <!-- Custom JS -->
+  <script src="js/script.js"></script>
 </body>
 </html>
