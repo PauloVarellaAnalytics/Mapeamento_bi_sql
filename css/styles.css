@@ -34,9 +34,6 @@ body {
 .joke-buttons {
   display: flex;
   gap: 20px;
-  justify-content: center;
-  align-items: center;
-  position: relative;
 }
 
 /* Estilos para os botões da brincadeira */
@@ -52,19 +49,10 @@ body {
   outline: none;
   overflow: hidden;
   padding: 0 10px;
+  position: relative;
   width: 190px;
   -webkit-tap-highlight-color: transparent;
   z-index: 1;
-}
-
-.yes-button {
-  position: absolute;
-  left: calc(50% - 210px); /* Centraliza com offset para manter alinhamento */
-}
-
-.no-button {
-  position: absolute;
-  left: calc(50% + 10px); /* Centraliza com offset para manter alinhamento */
 }
 
 .joke-button::before {
@@ -80,9 +68,9 @@ body {
   width: 100%;
 }
 
-.joke-button.ready .submitMessage .emoji {
+.joke-button.ready .submitMessage svg {
   opacity: 1;
-  top: 0;
+  top: 1px;
   transition: top 0.4s ease 600ms, opacity 0.3s linear 600ms;
 }
 
@@ -108,7 +96,7 @@ body {
   cy: 10;
 }
 
-.joke-button.complete .submitMessage .emoji {
+.joke-button.complete .submitMessage svg {
   top: -30px;
   transition: none;
 }
@@ -128,9 +116,9 @@ body {
   transition: all 0.2s ease calc(var(--d) + 1000ms);
 }
 
-.joke-button.complete .successMessage .emoji {
-  opacity: 1;
-  transition: opacity 0.3s ease-in-out 1.4s;
+.joke-button.complete .successMessage svg {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.3s ease-in-out 1.4s;
 }
 
 .button-text span {
@@ -144,16 +132,15 @@ body {
   top: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.emoji {
+.message svg {
   display: inline-block;
-  font-size: 16px;
+  fill: none;
   margin-right: 5px;
-  line-height: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
 }
 
 .submitMessage .button-text span {
@@ -161,11 +148,14 @@ body {
   transition: all 0.2s ease var(--d);
 }
 
-.submitMessage .emoji {
+.submitMessage svg {
+  color: #5c86ff;
+  margin-left: -1px;
   opacity: 0;
   position: relative;
   top: 30px;
   transition: top 0.4s ease, opacity 0.3s linear;
+  width: 14px;
 }
 
 .loadingMessage {
@@ -184,9 +174,12 @@ body {
   transition: all 0.2s ease var(--dr);
 }
 
-.successMessage .emoji {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+.successMessage svg {
+  color: #5cffa1;
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  transition: stroke-dashoffset 0.3s ease-in-out;
+  width: 14px;
 }
 
 .loadingCircle:nth-child(2) {
@@ -209,7 +202,7 @@ canvas {
   pointer-events: none;
   position: fixed;
   width: 100%;
-  z-index: 2000; /* Aumentado para garantir visibilidade */
+  z-index: 2;
 }
 
 /* Estilos para o banner de entrada */
@@ -456,18 +449,6 @@ button.icon-slide-left:hover::after {
     width: 150px;
     height: 36px;
     font-size: 12px;
-  }
-
-  .yes-button {
-    left: calc(50% - 160px);
-  }
-
-  .no-button {
-    left: calc(50% + 10px);
-  }
-
-  .emoji {
-    font-size: 14px;
   }
 
   .logo-banner img.banner-img {
