@@ -30,7 +30,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.5em;
+  font-size: 1.8em;
   font-weight: 600;
   color: #2d3e50;
   margin: 30px 0 15px;
@@ -189,6 +189,36 @@ button.icon-slide-left:hover::after {
   left: 20px;
 }
 
+/* Estilos para o botão de voltar ao topo */
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: #007acc;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.back-to-top:hover {
+  background: #005f99;
+  transform: translateY(-5px);
+}
+
+.back-to-top.visible {
+  display: flex;
+  opacity: 1;
+}
+
 @media (max-width: 480px) {
   button.js-tilt {
     width: 120px;
@@ -237,5 +267,13 @@ button.icon-slide-left:hover::after {
 
   p {
     padding: 0 20px;
+  }
+
+  .back-to-top {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    right: 15px;
+    bottom: 15px;
   }
 }
