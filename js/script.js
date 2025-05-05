@@ -14,7 +14,7 @@ document.querySelectorAll('.js-tilt').forEach((button) => {
     if (targetCard) {
       setTimeout(() => {
         targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 1000);
+      }, 500);
     } else {
       console.error('Cartão não encontrado para o ID:', targetId);
     }
