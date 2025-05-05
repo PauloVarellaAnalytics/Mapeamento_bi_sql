@@ -154,6 +154,37 @@ resizeCanvas = () => {
 
 window.addEventListener('resize', resizeCanvas);
 
+// Detecção de dispositivo móvel e navegador
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+const chromeModal = document.getElementById('chrome-modal');
+const openChromeBtn = document.getElementById('open-chrome-btn');
+const dismissModalBtn = document.getElementById('dismissModalBtn');
+
+if (isMobile && !isChrome) {
+  chromeModal.style.display = 'flex';
+  console.log('Dispositivo móvel detectado, não é Chrome:', navigator.userAgent);
+} else {
+  console.log('Navegador:', isChrome ? 'Chrome' : 'Não Chrome', 'Dispositivo:', isMobile ? 'Móvel' : 'Desktop');
+}
+
+openChromeBtn.addEventListener('click', () => {
+  if (/Android/.test(navigator.userAgent)) {
+    const url = window.location.href;
+    window.location.href = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end`;
+    console.log('Tentando abrir no Chrome (Android):', url);
+  } else {
+    alert('Por favor, copie o URL e abra no Google Chrome manualmente.');
+    console.log('Instrução para abrir no Chrome (iOS/outros)');
+  }
+  chromeModal.style.display = 'none';
+});
+
+dismissModalBtn.addEventListener('click', () => {
+  chromeModal.style.display = 'none';
+  console.log('Modal do Chrome fechado');
+});
+
 // Função para a brincadeira
 const jokeScreen = document.querySelector('.joke-screen');
 const yesButton = document.querySelector('#yes-button');
@@ -181,14 +212,19 @@ function proceedToBanner() {
 }
 
 function moveNoButton(x, y) {
-  const maxX = window.innerWidth - noButton.offsetWidth - 20;
-  const maxY = window.innerHeight - noButton.offsetHeight - 20;
-  const newX = Math.max(0, Math.min(maxX, x + (Math.random() * 200 - 100)));
-  const newY = Math.max(0, Math.min(maxY, y + (Math.random() * 200 - 100)));
+  const isMobileDevice = window.innerWidth <= 480;
+  const offset = isMobileDevice ? 50 : 100; // Menor deslocamento em mobile
+  const margin = 10; // Margem segura das bordas
+  const clientWidth = document.documentElement.clientWidth;
+  const clientHeight = document.documentElement.clientHeight;
+  const maxX = clientWidth - noButton.offsetWidth - margin;
+  const maxY = clientHeight - noButton.offsetHeight - margin;
+  const newX = Math.max(margin, Math.min(maxX, x + (Math.random() * offset * 2 - offset)));
+  const newY = Math.max(margin, Math.min(maxY, y + (Math.random() * offset * 2 - offset)));
   noButton.style.position = 'absolute';
   noButton.style.left = `${newX}px`;
   noButton.style.top = `${newY}px`;
-  console.log('Botão Não movido para:', newX, newY); // Depuração
+  console.log('Botão Não movido para:', newX, newY, 'Mobile:', isMobileDevice, 'ClientWidth:', clientWidth, 'ClientHeight:', clientHeight); // Depuração
 }
 
 function clickButton(button, disabledFlag, callback) {

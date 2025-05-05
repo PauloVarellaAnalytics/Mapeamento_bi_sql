@@ -11,6 +11,52 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Estilos para o modal do Chrome */
+.chrome-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 3000;
+  justify-content: center;
+  align-items: center;
+}
+
+.chrome-modal .modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 90%;
+  width: 300px;
+}
+
+.chrome-modal h3 {
+  font-size: 1.5em;
+  color: #2d3e50;
+  margin-bottom: 10px;
+}
+
+.chrome-modal p {
+  font-size: 1em;
+  margin-bottom: 20px;
+}
+
+.chrome-modal button {
+  background: #007acc;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.chrome-modal button:hover {
+  background: #005f99;
+}
+
 /* Estilos para a tela da brincadeira */
 .joke-screen {
   position: fixed;
@@ -59,12 +105,12 @@ body {
 
 .yes-button {
   position: absolute;
-  left: calc(50% - 210px); /* Centraliza com offset para manter alinhamento */
+  left: calc(50% - 210px); /* Centraliza com offset */
 }
 
 .no-button {
   position: absolute;
-  left: calc(50% + 10px); /* Centraliza com offset para manter alinhamento */
+  left: calc(50% + 10px); /* Centraliza com offset */
 }
 
 .joke-button::before {
@@ -209,7 +255,7 @@ canvas {
   pointer-events: none;
   position: fixed;
   width: 100%;
-  z-index: 2000; /* Aumentado para garantir visibilidade */
+  z-index: 2000;
 }
 
 /* Estilos para o banner de entrada */
@@ -529,5 +575,15 @@ button.icon-slide-left:hover::after {
     font-size: 20px;
     right: 15px;
     bottom: 15px;
+  }
+
+  .chrome-modal .modal-content {
+    width: 90%;
+    max-width: 280px;
+  }
+
+  .chrome-modal button {
+    padding: 8px 15px;
+    font-size: 0.9em;
   }
 }
