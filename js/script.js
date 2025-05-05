@@ -14,7 +14,7 @@ document.querySelectorAll('.js-tilt').forEach((button) => {
     if (targetCard) {
       setTimeout(() => {
         targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 500);
+      }, 1000);
     } else {
       console.error('Cartão não encontrado para o ID:', targetId);
     }
@@ -23,8 +23,12 @@ document.querySelectorAll('.js-tilt').forEach((button) => {
 
 // Função para o botão de voltar ao topo
 const backToTopButton = document.querySelector('.back-to-top');
+const buttonContainer = document.querySelector('.button-container');
+
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 200) {
+  const buttonContainerBottom = buttonContainer.offsetTop + buttonContainer.offsetHeight;
+  console.log('ScrollY:', window.scrollY, 'ButtonContainerBottom:', buttonContainerBottom); // Para depuração
+  if (window.scrollY > buttonContainerBottom) {
     backToTopButton.classList.add('visible');
   } else {
     backToTopButton.classList.remove('visible');
@@ -32,5 +36,6 @@ window.addEventListener('scroll', () => {
 });
 
 backToTopButton.addEventListener('click', () => {
+  console.log('Botão de voltar ao topo clicado'); // Para depuração
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
