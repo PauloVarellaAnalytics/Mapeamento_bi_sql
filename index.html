@@ -5,7 +5,7 @@
   <title>Mapeamento Power BI + SQL</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600;800&family=Quicksand:wght@500&display=swap" rel="stylesheet">
   <!-- CSS -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -14,10 +14,41 @@
   <div class="joke-screen">
     <h2>Você me acha um cara bonito?</h2>
     <div class="joke-buttons">
-      <button class="joke-button yes-button">Sim</button>
-      <button class="joke-button no-button" id="no-button">Não</button>
+      <button class="joke-button yes-button ready" id="yes-button">
+        <div class="message submitMessage">
+          <span class="emoji">👍</span> <span class="button-text">Sim</span>
+        </div>
+        <div class="message loadingMessage">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 17">
+            <circle class="loadingCircle" cx="2.2" cy="10" r="1.6"/>
+            <circle class="loadingCircle" cx="9.5" cy="10" r="1.6"/>
+            <circle class="loadingCircle" cx="16.8" cy="10" r="1.6"/>
+          </svg>
+        </div>
+        <div class="message successMessage">
+          <span class="emoji">😎</span> <span class="button-text">Boa escolha!</span>
+        </div>
+      </button>
+      <button class="joke-button no-button ready" id="no-button">
+        <div class="message submitMessage">
+          <span class="emoji">👎</span> <span class="button-text">Não</span>
+        </div>
+        <div class="message loadingMessage">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 17">
+            <circle class="loadingCircle" cx="2.2" cy="10" r="1.6"/>
+            <circle class="loadingCircle" cx="9.5" cy="10" r="1.6"/>
+            <circle class="loadingCircle" cx="16.8" cy="10" r="1.6"/>
+          </svg>
+        </div>
+        <div class="message successMessage">
+          <span class="emoji">😝</span> <span class="button-text">Boa escolha!</span>
+        </div>
+      </button>
     </div>
   </div>
+
+  <!-- Canvas para confetes -->
+  <canvas id="canvas"></canvas>
 
   <!-- Banner de entrada com efeito -->
   <div class="logo-banner">
