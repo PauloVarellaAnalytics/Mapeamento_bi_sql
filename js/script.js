@@ -18,8 +18,6 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-let cx = ctx.canvas.width / 2;
-let cy = ctx.canvas.height / 2;
 
 let confetti = [];
 let sequins = [];
@@ -49,9 +47,10 @@ function Confetto(button) {
     x: randomRange(5, 9),
     y: randomRange(8, 15),
   };
+  const rect = button.getBoundingClientRect();
   this.position = {
-    x: randomRange(cx - button.offsetWidth / 4, cx + button.offsetWidth / 4),
-    y: randomRange(cy + button.offsetHeight / 2 + 8, cy + (1.5 * button.offsetHeight) - 8),
+    x: randomRange(rect.left - rect.width / 4, rect.left + rect.width / 4),
+    y: randomRange(rect.top + rect.height / 2 + 8, rect.top + (1.5 * rect.height) - 8),
   };
   this.rotation = randomRange(0, 2 * Math.PI);
   this.scale = {
@@ -73,9 +72,10 @@ Confetto.prototype.update = function () {
 function Sequin(button) {
   this.color = colors[Math.floor(randomRange(0, colors.length))].back;
   this.radius = randomRange(1, 2);
+  const rect = button.getBoundingClientRect();
   this.position = {
-    x: randomRange(cx - button.offsetWidth / 3, cx + button.offsetWidth / 3),
-    y: randomRange(cy + button.offsetHeight / 2 + 8, cy + (1.5 * button.offsetHeight) - 8),
+    x: randomRange(rect.left - rect.width / 3, rect.left + rect.width / 3),
+    y: randomRange(rect.top + rect.height / 2 + 8, rect.top + (1.5 * rect.height) - 8),
   };
   this.velocity = {
     x: randomRange(-6, 6),
@@ -103,6 +103,13 @@ initBurst = (button) => {
 };
 
 render = () => {
+  const jokeScreen = document.querySelector('.joke-screen');
+  if (!jokeScreen || jokeScreen.style.display === 'none') {
+    confetti = [];
+    sequins = [];
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    return;
+  }
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   console.log('Renderizando, confetti:', confetti.length, 'sequins:', sequins.length); // Depuração
   confetti.forEach((confetto, index) => {
@@ -114,9 +121,6 @@ render = () => {
     ctx.fillStyle = confetto.scale.y > 0 ? confetto.color.front : confetto.color.back;
     ctx.fillRect(-width / 2, -height / 2, width, height);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    if (confetto.velocity.y < 0) {
-      ctx.clearRect(cx - button.offsetWidth / 2, cy + button.offsetHeight / 2, button.offsetWidth, button.offsetHeight);
-    }
   });
   sequins.forEach((sequin, index) => {
     ctx.translate(sequin.position.x, sequin.position.y);
@@ -126,9 +130,6 @@ render = () => {
     ctx.arc(0, 0, sequin.radius, 0, 2 * Math.PI);
     ctx.fill();
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    if (sequin.velocity.y < 0) {
-      ctx.clearRect(cx - button.offsetWidth / 2, cy + button.offsetHeight / 2, button.offsetWidth, button.offsetHeight);
-    }
   });
   confetti.forEach((confetto, index) => {
     if (confetto.position.y >= canvas.height) confetti.splice(index, 1);
@@ -142,8 +143,6 @@ render = () => {
 resizeCanvas = () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-  cx = ctx.canvas.width / 2;
-  cy = ctx.canvas.height / 2;
 };
 
 window.addEventListener('resize', resizeCanvas);
@@ -158,6 +157,8 @@ let disabledYes = false;
 let disabledNo = false;
 
 function proceedToBanner() {
+  confetti = [];
+  sequins = [];
   jokeScreen.style.display = 'none';
   logoBanner.style.display = 'flex';
   setTimeout(() => {
@@ -172,13 +173,31 @@ function proceedToBanner() {
 }
 
 function moveNoButton(x, y) {
+  noButton.classList.add('moving');
   const maxX = window.innerWidth - noButton.offsetWidth - 20;
   const maxY = window.innerHeight - noButton.offsetHeight - 20;
-  const newX = Math.max(0, Math.min(maxX, x + (Math.random() * 200 - 100)));
-  const newY = Math.max(0, Math.min(maxY, y + (Math.random() * 200 - 100)));
-  noButton.style.position = 'absolute';
+  const yesRect = yesButton.getBoundingClientRect();
+  let newX, newY;
+  const isLeftSide = x < window.innerWidth / 2;
+  if (isLeftSide) {
+    newX = randomRange(20, window.innerWidth / 2 - noButton.offsetWidth - 20);
+  } else {
+    newX = randomRange(window.innerWidth / 2 + 20, maxX);
+  }
+  newY = randomRange(20, maxY);
+  // Evitar sobreposição com yesButton
+  const noRect = { left: newX, top: newY, right: newX + noButton.offsetWidth, bottom: newY + noButton.offsetHeight };
+  if (
+    noRect.left < yesRect.right &&
+    noRect.right > yesRect.left &&
+    noRect.top < yesRect.bottom &&
+    noRect.bottom > yesRect.top
+  ) {
+    newY = yesRect.top > window.innerHeight / 2 ? randomRange(20, yesRect.top - noButton.offsetHeight - 20) : randomRange(yesRect.bottom + 20, maxY);
+  }
   noButton.style.left = `${newX}px`;
   noButton.style.top = `${newY}px`;
+  console.log(`Botão Não movido para: x=${newX}, y=${newY}, lado=${isLeftSide ? 'esquerda' : 'direita'}`); // Depuração
 }
 
 function clickButton(button, disabledFlag, callback) {
@@ -189,12 +208,14 @@ function clickButton(button, disabledFlag, callback) {
     setTimeout(() => {
       button.classList.add('complete');
       button.classList.remove('loading');
+      button.querySelector('.successMessage .emoji').classList.remove('hidden');
       setTimeout(() => {
         initBurst(button);
         setTimeout(() => {
           disabledFlag = false;
           button.classList.add('ready');
           button.classList.remove('complete');
+          button.querySelector('.successMessage .emoji').classList.add('hidden');
           callback();
         }, 4000);
       }, 320);
@@ -220,10 +241,13 @@ function clickButton(button, disabledFlag, callback) {
 noButton.addEventListener('click', (e) => {
   if (noButtonAttempts < 3) {
     e.preventDefault();
-    moveNoButton(e.clientX, e.clientY);
     noButtonAttempts++;
+    moveNoButton(e.clientX, e.clientY);
+    // Atualizar emoji com base na tentativa
+    noButton.querySelector('.submitMessage .emoji').textContent = '👎'.repeat(noButtonAttempts);
     console.log('Tentativa no botão Não (clique):', noButtonAttempts);
     if (noButtonAttempts >= 3) {
+      noButton.querySelector('.submitMessage .emoji').textContent = '😛';
       noButton.querySelector('.submitMessage .button-text').textContent = 'Com certeza';
       const textElements = noButton.querySelectorAll('.button-text');
       textElements.forEach((element) => {
@@ -246,10 +270,13 @@ noButton.addEventListener('touchend', (e) => {
   if (noButtonAttempts < 3) {
     e.preventDefault();
     const touch = e.changedTouches[0];
-    moveNoButton(touch.clientX, touch.clientY);
     noButtonAttempts++;
+    moveNoButton(touch.clientX, touch.clientY);
+    // Atualizar emoji com base na tentativa
+    noButton.querySelector('.submitMessage .emoji').textContent = '👎'.repeat(noButtonAttempts);
     console.log('Tentativa no botão Não (toque):', noButtonAttempts);
     if (noButtonAttempts >= 3) {
+      noButton.querySelector('.submitMessage .emoji').textContent = '😛';
       noButton.querySelector('.submitMessage .button-text').textContent = 'Com certeza';
       const textElements = noButton.querySelectorAll('.button-text');
       textElements.forEach((element) => {

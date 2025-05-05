@@ -33,6 +33,7 @@ body {
 
 .joke-buttons {
   display: flex;
+  justify-content: center;
   gap: 20px;
 }
 
@@ -55,6 +56,10 @@ body {
   z-index: 1;
 }
 
+.joke-button.moving {
+  position: absolute;
+}
+
 .joke-button::before {
   background: #1f2335;
   border-radius: 50px;
@@ -68,7 +73,7 @@ body {
   width: 100%;
 }
 
-.joke-button.ready .submitMessage svg {
+.joke-button.ready .submitMessage .emoji {
   opacity: 1;
   top: 1px;
   transition: top 0.4s ease 600ms, opacity 0.3s linear 600ms;
@@ -96,7 +101,7 @@ body {
   cy: 10;
 }
 
-.joke-button.complete .submitMessage svg {
+.joke-button.complete .submitMessage .emoji {
   top: -30px;
   transition: none;
 }
@@ -116,9 +121,13 @@ body {
   transition: all 0.2s ease calc(var(--d) + 1000ms);
 }
 
-.joke-button.complete .successMessage svg {
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 0.3s ease-in-out 1.4s;
+.joke-button.complete .successMessage .emoji {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out 1.4s;
+}
+
+.joke-button.complete .successMessage .emoji.hidden {
+  opacity: 0;
 }
 
 .button-text span {
@@ -134,6 +143,7 @@ body {
   width: 100%;
 }
 
+.message .emoji,
 .message svg {
   display: inline-block;
   fill: none;
@@ -141,6 +151,8 @@ body {
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 2;
+  font-size: 14px;
+  vertical-align: middle;
 }
 
 .submitMessage .button-text span {
@@ -148,14 +160,13 @@ body {
   transition: all 0.2s ease var(--d);
 }
 
-.submitMessage svg {
+.submitMessage .emoji {
   color: #5c86ff;
   margin-left: -1px;
   opacity: 0;
   position: relative;
   top: 30px;
   transition: top 0.4s ease, opacity 0.3s linear;
-  width: 14px;
 }
 
 .loadingMessage {
@@ -174,12 +185,10 @@ body {
   transition: all 0.2s ease var(--dr);
 }
 
-.successMessage svg {
+.successMessage .emoji {
   color: #5cffa1;
-  stroke-dasharray: 20;
-  stroke-dashoffset: 20;
-  transition: stroke-dashoffset 0.3s ease-in-out;
-  width: 14px;
+  font-size: 14px;
+  opacity: 0;
 }
 
 .loadingCircle:nth-child(2) {
@@ -285,7 +294,9 @@ p, li {
 }
 
 p {
-  padding: 0 40px;
+  padding: 0 20px;
+  max-width: 1100px;
+  margin: 20px auto;
 }
 
 ul {
@@ -445,6 +456,11 @@ button.icon-slide-left:hover::after {
     margin-bottom: 20px;
   }
 
+  .joke-buttons {
+    flex-direction: column;
+    gap: 15px;
+  }
+
   .joke-button {
     width: 150px;
     height: 36px;
@@ -501,7 +517,7 @@ button.icon-slide-left:hover::after {
   }
 
   p {
-    padding: 0 20px;
+    padding: 0 15px;
   }
 
   .back-to-top {
