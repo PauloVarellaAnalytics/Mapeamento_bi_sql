@@ -9,12 +9,14 @@ VanillaTilt.init(document.querySelectorAll(".js-tilt"), {
 document.querySelectorAll('.js-tilt').forEach((button) => {
   button.addEventListener('click', () => {
     const targetId = button.getAttribute('data-target');
+    console.log('Botão clicado, destino:', targetId); // Para depuração
     const targetCard = document.getElementById(targetId);
     if (targetCard) {
-      // Atraso de 1 segundo antes da rolagem
       setTimeout(() => {
-        targetCard.scrollIntoView({ behavior: 'smooth' });
-      }, 500);
+        targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 1000);
+    } else {
+      console.error('Cartão não encontrado para o ID:', targetId);
     }
   });
 });
