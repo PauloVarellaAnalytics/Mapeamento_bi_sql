@@ -154,37 +154,6 @@ resizeCanvas = () => {
 
 window.addEventListener('resize', resizeCanvas);
 
-// Detecção de dispositivo móvel e navegador
-const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-const chromeModal = document.getElementById('chrome-modal');
-const openChromeBtn = document.getElementById('open-chrome-btn');
-const dismissModalBtn = document.getElementById('dismissModalBtn');
-
-if (isMobile && !isChrome) {
-  chromeModal.style.display = 'flex';
-  console.log('Dispositivo móvel detectado, não é Chrome:', navigator.userAgent);
-} else {
-  console.log('Navegador:', isChrome ? 'Chrome' : 'Não Chrome', 'Dispositivo:', isMobile ? 'Móvel' : 'Desktop');
-}
-
-openChromeBtn.addEventListener('click', () => {
-  if (/Android/.test(navigator.userAgent)) {
-    const url = window.location.href;
-    window.location.href = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end`;
-    console.log('Tentando abrir no Chrome (Android):', url);
-  } else {
-    alert('Por favor, copie o URL e abra no Google Chrome manualmente.');
-    console.log('Instrução para abrir no Chrome (iOS/outros)');
-  }
-  chromeModal.style.display = 'none';
-});
-
-dismissModalBtn.addEventListener('click', () => {
-  chromeModal.style.display = 'none';
-  console.log('Modal do Chrome fechado');
-});
-
 // Função para a brincadeira
 const jokeScreen = document.querySelector('.joke-screen');
 const yesButton = document.querySelector('#yes-button');
@@ -211,20 +180,34 @@ function proceedToBanner() {
   }, 1500);
 }
 
-function moveNoButton(x, y) {
-  const isMobileDevice = window.innerWidth <= 480;
-  const offset = isMobileDevice ? 50 : 100; // Menor deslocamento em mobile
-  const margin = 10; // Margem segura das bordas
+function moveNoButton() {
+  const isMobile = window.innerWidth <= 480;
+  const offset = isMobile ? 50 : 100; // Menor deslocamento em mobile
+  const margin = 20; // Margem segura das bordas aumentada
   const clientWidth = document.documentElement.clientWidth;
   const clientHeight = document.documentElement.clientHeight;
-  const maxX = clientWidth - noButton.offsetWidth - margin;
-  const maxY = clientHeight - noButton.offsetHeight - margin;
-  const newX = Math.max(margin, Math.min(maxX, x + (Math.random() * offset * 2 - offset)));
-  const newY = Math.max(margin, Math.min(maxY, y + (Math.random() * offset * 2 - offset)));
+  const buttonWidth = noButton.offsetWidth || 190; // Valor padrão caso offsetWidth seja 0
+  const buttonHeight = noButton.offsetHeight || 40; // Valor padrão caso offsetHeight seja 0
+  const maxX = clientWidth - buttonWidth - margin;
+  const maxY = clientHeight - buttonHeight - margin;
+  
+  // Usar posição atual do botão como base
+  const rect = noButton.getBoundingClientRect();
+  const currentX = rect.left;
+  const currentY = rect.top;
+  
+  // Garantir que a nova posição esteja dentro dos limites
+  let newX = currentX + (Math.random() * offset * 2 - offset);
+  let newY = currentY + (Math.random() * offset * 2 - offset);
+  newX = Math.max(margin, Math.min(maxX, newX));
+  newY = Math.max(margin, Math.min(maxY, newY));
+  
   noButton.style.position = 'absolute';
   noButton.style.left = `${newX}px`;
   noButton.style.top = `${newY}px`;
-  console.log('Botão Não movido para:', newX, newY, 'Mobile:', isMobileDevice, 'ClientWidth:', clientWidth, 'ClientHeight:', clientHeight); // Depuração
+  noButton.style.pointerEvents = 'auto'; // Garantir que o botão permaneça clicável
+  noButton.style.cursor = 'pointer'; // Garantir cursor padrão
+  console.log('Botão Não movido para:', newX, newY, 'Mobile:', isMobile, 'ClientWidth:', clientWidth, 'ClientHeight:', clientHeight, 'ButtonWidth:', buttonWidth, 'ButtonHeight:', buttonHeight); // Depuração
 }
 
 function clickButton(button, disabledFlag, callback) {
@@ -269,9 +252,10 @@ function clickButton(button, disabledFlag, callback) {
 
 // Eventos para o botão "Não"
 noButton.addEventListener('click', (e) => {
+  console.log('Evento click disparado no botão Não'); // Depuração
   if (noButtonAttempts < 3) {
     e.preventDefault();
-    moveNoButton(e.clientX, e.clientY);
+    moveNoButton();
     noButtonAttempts++;
     console.log('Tentativa no botão Não (clique):', noButtonAttempts);
     if (noButtonAttempts >= 3) {
@@ -288,6 +272,7 @@ noButton.addEventListener('click', (e) => {
       });
       noButton.style.cursor = 'pointer';
       noButton.style.pointerEvents = 'auto';
+      console.log('Botão Não atualizado para "Com certeza"');
     }
   } else {
     disabledNo = clickButton(noButton, disabledNo, proceedToBanner);
@@ -295,10 +280,10 @@ noButton.addEventListener('click', (e) => {
 });
 
 noButton.addEventListener('touchend', (e) => {
+  console.log('Evento touchend disparado no botão Não'); // Depuração
   if (noButtonAttempts < 3) {
     e.preventDefault();
-    const touch = e.changedTouches[0];
-    moveNoButton(touch.clientX, touch.clientY);
+    moveNoButton();
     noButtonAttempts++;
     console.log('Tentativa no botão Não (toque):', noButtonAttempts);
     if (noButtonAttempts >= 3) {
@@ -315,6 +300,7 @@ noButton.addEventListener('touchend', (e) => {
       });
       noButton.style.cursor = 'pointer';
       noButton.style.pointerEvents = 'auto';
+      console.log('Botão Não atualizado para "Com certeza"');
     }
   } else {
     disabledNo = clickButton(noButton, disabledNo, proceedToBanner);
@@ -322,6 +308,7 @@ noButton.addEventListener('touchend', (e) => {
 });
 
 yesButton.addEventListener('click', () => {
+  console.log('Evento click disparado no botão Sim'); // Depuração
   disabledYes = clickButton(yesButton, disabledYes, proceedToBanner);
 });
 
