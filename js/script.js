@@ -1,381 +1,513 @@
-VanillaTilt.init(document.querySelectorAll(".js-tilt"), {
-  max: 15,
-  speed: 400,
-  glare: true,
-  "max-glare": 0.2
-});
-
-// Configuração dos confetes
-const confettiCount = 20;
-const sequinCount = 10;
-const gravityConfetti = 0.3;
-const gravitySequins = 0.55;
-const dragConfetti = 0.075;
-const dragSequins = 0.02;
-const terminalVelocity = 3;
-
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-if (!ctx) {
-  console.error('Contexto do canvas não inicializado');
-}
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let confetti = [];
-let sequins = [];
-
-const colors = [
-  { front: '#7b5cff', back: '#6245e0' }, // Purple
-  { front: '#b3c7ff', back: '#8fa5e5' }, // Light Blue
-  { front: '#5c86ff', back: '#345dd1' }  // Darker Blue
-];
-
-randomRange = (min, max) => Math.random() * (max - min) + min;
-
-initConfettoVelocity = (xRange, yRange) => {
-  const x = randomRange(xRange[0], xRange[1]);
-  const range = yRange[1] - yRange[0] + 1;
-  let y = yRange[1] - Math.abs(randomRange(0, range) + randomRange(0, range) - range);
-  if (y >= yRange[1] - 1) {
-    y += (Math.random() < .25) ? randomRange(1, 3) : 0;
-  }
-  return { x: x, y: -y };
-};
-
-function Confetto(button) {
-  this.randomModifier = randomRange(0, 99);
-  this.color = colors[Math.floor(randomRange(0, colors.length))];
-  this.dimensions = {
-    x: randomRange(5, 9),
-    y: randomRange(8, 15),
-  };
-  const rect = button.getBoundingClientRect();
-  this.position = {
-    x: rect.left + rect.width / 2, // Centro do botão
-    y: rect.top + rect.height / 2,
-  };
-  this.rotation = randomRange(0, 2 * Math.PI);
-  this.scale = {
-    x: 1,
-    y: 1,
-  };
-  this.velocity = initConfettoVelocity([-9, 9], [6, 11]);
+* {
+  box-sizing: border-box;
 }
 
-Confetto.prototype.update = function () {
-  this.velocity.x -= this.velocity.x * dragConfetti;
-  this.velocity.y = Math.min(this.velocity.y + gravityConfetti, terminalVelocity);
-  this.velocity.x += Math.random() > 0.5 ? Math.random() : -Math.random();
-  this.position.x += this.velocity.x;
-  this.position.y += this.velocity.y;
-  this.scale.y = Math.cos((this.position.y + this.randomModifier) * 0.09);
-};
-
-function Sequin(button) {
-  this.color = colors[Math.floor(randomRange(0, colors.length))].back;
-  this.radius = randomRange(1, 2);
-  const rect = button.getBoundingClientRect();
-  this.position = {
-    x: rect.left + rect.width / 2, // Centro do botão
-    y: rect.top + rect.height / 2,
-  };
-  this.velocity = {
-    x: randomRange(-6, 6),
-    y: randomRange(-8, -12)
-  };
+body {
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f7fa;
+  color: #333;
+  -webkit-font-smoothing: antialiased;
 }
 
-Sequin.prototype.update = function () {
-  this.velocity.x -= this.velocity.x * dragSequins;
-  this.velocity.y = this.velocity.y + gravitySequins;
-  this.position.x += this.velocity.x;
-  this.position.y += this.velocity.y;
-};
-
-// Pré-carregar o som
-const confettiSound = new Audio('sounds/confetti.wav');
-confettiSound.load();
-confettiSound.oncanplaythrough = () => console.log('Som confetti.wav carregado com sucesso');
-confettiSound.onerror = (err) => console.error('Erro ao carregar som confetti.wav:', err);
-
-initBurst = (button) => {
-  console.log('initBurst chamado para botão:', button.id, 'posição:', button.getBoundingClientRect());
-  confetti = []; // Limpar confetes anteriores
-  sequins = []; // Limpar sequins anteriores
-  for (let i = 0; i < confettiCount; i++) {
-    confetti.push(new Confetto(button));
-  }
-  for (let i = 0; i < sequinCount; i++) {
-    sequins.push(new Sequin(button));
-  }
-  console.log('Confetes criados:', confetti.length, 'Sequins criados:', sequins.length);
-  confettiSound.currentTime = 0; // Resetar som
-  confettiSound.play().catch(err => console.error('Erro ao tocar som:', err));
-  window.requestAnimationFrame(render); // Forçar renderização
-};
-
-render = () => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  if (confetti.length === 0 && sequins.length === 0) {
-    console.log('Nenhum confete para renderizar, parando render');
-    return;
-  }
-  console.log('Renderizando, confetti:', confetti.length, 'sequins:', sequins.length);
-  confetti.forEach((confetto, index) => {
-    let width = confetto.dimensions.x * confetto.scale.x;
-    let height = confetto.dimensions.y * confetto.scale.y;
-    ctx.translate(confetto.position.x, confetto.position.y);
-    ctx.rotate(confetto.rotation);
-    confetto.update();
-    ctx.fillStyle = confetto.scale.y > 0 ? confetto.color.front : confetto.color.back;
-    ctx.fillRect(-width / 2, -height / 2, width, height);
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-  });
-  sequins.forEach((sequin, index) => {
-    ctx.translate(sequin.position.x, sequin.position.y);
-    sequin.update();
-    ctx.fillStyle = sequin.color;
-    ctx.beginPath();
-    ctx.arc(0, 0, sequin.radius, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-  });
-  confetti = confetti.filter(confetto => confetto.position.y < canvas.height);
-  sequins = sequins.filter(sequin => sequin.position.y < canvas.height);
-  window.requestAnimationFrame(render);
-};
-
-resizeCanvas = () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  console.log('Canvas redimensionado:', canvas.width, 'x', canvas.height);
-};
-
-window.addEventListener('resize', resizeCanvas);
-
-// Função para a brincadeira
-const jokeScreen = document.querySelector('.joke-screen');
-const yesButton = document.querySelector('#yes-button');
-const noButton = document.querySelector('#no-button');
-const logoBanner = document.querySelector('.logo-banner');
-let noButtonAttempts = 0;
-let disabledYes = false;
-let disabledNo = false;
-
-function proceedToBanner() {
-  jokeScreen.style.display = 'none';
-  logoBanner.style.display = 'flex';
-  setTimeout(() => {
-    logoBanner.remove();
-    document.querySelector('header').style.display = 'block';
-    document.querySelector('.button-container').style.display = 'flex';
-    document.querySelector('.content-container').style.display = 'flex';
-    document.querySelector('.back-to-top').style.display = 'block';
-    document.querySelector('p').style.display = 'block';
-    console.log('Banner removido, conteúdo restaurado');
-    confetti = []; // Limpar confetes ao carregar o site
-    sequins = [];
-    console.log('Confetes e sequins limpos ao carregar site');
-  }, 1500);
+/* Estilos para a tela da brincadeira */
+.joke-screen {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
 }
 
-function moveNoButton() {
-  const isMobile = window.innerWidth <= 480;
-  const offset = isMobile ? 30 : 50; // Deslocamento reduzido
-  const margin = 30; // Margem segura aumentada
-  const jokeScreenRect = jokeScreen.getBoundingClientRect();
-  const buttonRect = noButton.getBoundingClientRect();
-  
-  // Dimensões do botão com valores padrão
-  const buttonWidth = buttonRect.width || 190;
-  const buttonHeight = buttonRect.height || 40;
-  
-  // Definir quadro (80% da área da joke-screen)
-  const frameWidth = jokeScreenRect.width * 0.8;
-  const frameHeight = jokeScreenRect.height * 0.8;
-  const frameX = (jokeScreenRect.width - frameWidth) / 2 + jokeScreenRect.left;
-  const frameY = (jokeScreenRect.height - frameHeight) / 2 + jokeScreenRect.top;
-  
-  const maxX = frameX + frameWidth - buttonWidth - margin;
-  const minX = frameX + margin;
-  const maxY = frameY + frameHeight - buttonHeight - margin;
-  const minY = frameY + margin;
-  
-  // Posição atual ou inicial (se inválida)
-  let currentX = buttonRect.left;
-  let currentY = buttonRect.top;
-  if (!isFinite(currentX) || currentX < minX || currentX > maxX || !isFinite(currentY) || currentY < minY || currentY > maxY) {
-    currentX = frameX + frameWidth / 2 - buttonWidth / 2; // Centro do quadro
-    currentY = frameY + frameHeight / 2 - buttonHeight / 2;
-  }
-  
-  // Calcular nova posição
-  let newX = currentX + (Math.random() * offset * 2 - offset);
-  let newY = currentY + (Math.random() * offset * 2 - offset);
-  newX = Math.max(minX, Math.min(maxX, newX));
-  newY = Math.max(minY, Math.min(maxY, newY));
-  
-  noButton.style.position = 'absolute';
-  noButton.style.left = `${newX}px`;
-  noButton.style.top = `${newY}px`;
-  noButton.style.pointerEvents = 'auto';
-  noButton.style.cursor = 'pointer';
-  noButton.style.visibility = 'visible'; // Garantir visibilidade
-  console.log('Botão Não movido para:', newX, newY, 'Mobile:', isMobile, 'Frame:', { minX, maxX, minY, maxY }, 'Button:', { width: buttonWidth, height: buttonHeight });
+.joke-screen h2 {
+  font-size: 2em;
+  color: #2d3e50;
+  margin-bottom: 30px;
 }
 
-function clickButton(button, disabledFlag, callback) {
-  if (!disabledFlag) {
-    disabledFlag = true;
-    button.classList.add('loading');
-    button.classList.remove('ready');
-    console.log('clickButton iniciado para:', button.id);
-    setTimeout(() => {
-      button.classList.add('complete');
-      button.classList.remove('loading');
-      setTimeout(() => {
-        console.log('Iniciando initBurst para:', button.id);
-        initBurst(button);
-        setTimeout(() => {
-          disabledFlag = false;
-          button.classList.add('ready');
-          button.classList.remove('complete');
-          confetti = []; // Limpar confetes após animação
-          sequins = []; // Limpar sequins após animação
-          console.log('Confetes e sequins limpos após animação');
-          callback();
-        }, 4000);
-      }, 320);
-    }, 1800);
-  }
-  return disabledFlag;
+.joke-buttons {
+  display: flex;
+  gap: 20px;
 }
 
-// Configurar animação de texto nos botões
-[yesButton, noButton].forEach(button => {
-  const textElements = button.querySelectorAll('.button-text');
-  textElements.forEach((element) => {
-    const characters = element.innerText.split('');
-    let characterHTML = '';
-    characters.forEach((letter, index) => {
-      characterHTML += `<span class="char${index}" style="--d:${index * 30}ms; --dr:${(characters.length - index - 1) * 30}ms;">${letter}</span>`;
-    });
-    element.innerHTML = characterHTML;
-  });
-});
+/* Estilos para os botões da brincadeira */
+.joke-button {
+  background: none;
+  border: none;
+  color: #f4f7ff;
+  cursor: pointer;
+  font-family: "Quicksand", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  outline: none;
+  overflow: hidden;
+  padding: 0 10px;
+  position: relative;
+  width: 190px;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 1;
+}
 
-// Garantir posição inicial visível do botão "Não"
-window.addEventListener('load', () => {
-  moveNoButton(); // Posicionar botão "Não" inicialmente
-  console.log('Botão Não posicionado ao carregar página');
-});
+.joke-button::before {
+  background: #1f2335;
+  border-radius: 50px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4) inset;
+  content: "";
+  display: block;
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+  transition: width 0.2s cubic-bezier(0.39, 1.86, 0.64, 1) 0.3s;
+  width: 100%;
+}
 
-// Eventos para o botão "Não"
-noButton.addEventListener('click', (e) => {
-  console.log('Evento click disparado no botão Não');
-  if (noButtonAttempts < 3) {
-    e.preventDefault();
-    moveNoButton();
-    noButtonAttempts++;
-    console.log('Tentativa no botão Não (clique):', noButtonAttempts);
-    if (noButtonAttempts >= 3) {
-      noButton.querySelector('.submitMessage .emoji').textContent = '🕶️';
-      noButton.querySelector('.submitMessage .button-text').textContent = 'Com certeza';
-      const textElements = noButton.querySelectorAll('.button-text');
-      textElements.forEach((element) => {
-        const characters = element.innerText.split('');
-        let characterHTML = '';
-        characters.forEach((letter, index) => {
-          characterHTML += `<span class="char${index}" style="--d:${index * 30}ms; --dr:${(characters.length - index - 1) * 30}ms;">${letter}</span>`;
-        });
-        element.innerHTML = characterHTML;
-      });
-      noButton.style.cursor = 'pointer';
-      noButton.style.pointerEvents = 'auto';
-      console.log('Botão Não atualizado para "Com certeza"');
-    }
-  } else {
-    disabledNo = clickButton(noButton, disabledNo, proceedToBanner);
+.joke-button.ready .submitMessage .emoji {
+  opacity: 1;
+  top: 0;
+  transition: top 0.4s ease 600ms, opacity 0.3s linear 600ms;
+}
+
+.joke-button.ready .submitMessage .button-text span {
+  top: 0;
+  opacity: 1;
+  transition: all 0.2s ease calc(var(--dr) + 600ms);
+}
+
+.joke-button.loading::before {
+  transition: width 0.3s ease;
+  width: 80%;
+}
+
+.joke-button.loading .loadingMessage {
+  opacity: 1;
+}
+
+.joke-button.loading .loadingCircle {
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-name: loading;
+  cy: 10;
+}
+
+.joke-button.complete .submitMessage .emoji {
+  top: -30px;
+  transition: none;
+}
+
+.joke-button.complete .submitMessage .button-text span {
+  top: -8px;
+  transition: none;
+}
+
+.joke-button.complete .loadingMessage {
+  top: 80px;
+}
+
+.joke-button.complete .successMessage .button-text span {
+  left: 0;
+  opacity: 1;
+  transition: all 0.2s ease calc(var(--d) + 1000ms);
+}
+
+.joke-button.complete .successMessage .emoji {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out 1.4s;
+}
+
+.button-text span {
+  opacity: 0;
+  position: relative;
+}
+
+.message {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emoji {
+  display: inline-block;
+  font-size: 16px;
+  margin-right: 5px;
+  line-height: 1;
+}
+
+.submitMessage .button-text span {
+  top: 8px;
+  transition: all 0.2s ease var(--d);
+}
+
+.submitMessage .emoji {
+  opacity: 0;
+  position: relative;
+  top: 30px;
+  transition: top 0.4s ease, opacity 0.3s linear;
+}
+
+.loadingMessage {
+  opacity: 0;
+  transition: opacity 0.3s linear 0.3s, top 0.4s cubic-bezier(0.22, 0, 0.41, -0.57);
+}
+
+.loadingMessage svg {
+  fill: #5c86ff;
+  margin: 0;
+  width: 22px;
+}
+
+.successMessage .button-text span {
+  left: 5px;
+  transition: all 0.2s ease var(--dr);
+}
+
+.successMessage .emoji {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.loadingCircle:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.loadingCircle:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes loading {
+  0% { cy: 10; }
+  25% { cy: 3; }
+  50% { cy: 10; }
+}
+
+/* Estilos para o canvas de confetes */
+canvas {
+  height: 100vh;
+  pointer-events: none;
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+}
+
+/* Estilos para o banner de entrada */
+.logo-banner {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-banner img.banner-img {
+  width: 150px;
+  height: auto;
+  animation: bounce 0.8s ease infinite;
+}
+
+@keyframes bounce {
+  0% { opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+header {
+  padding: 30px 20px 10px;
+  text-align: center;
+}
+
+.tilt-img {
+  max-width: 150px;
+  margin: 0 auto;
+  display: block;
+}
+
+h1 {
+  font-size: 2.2em;
+  font-weight: 800;
+  margin-top: 20px;
+  color: #2d3e50;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.8em;
+  font-weight: 600;
+  color: #2d3e50;
+  margin: 30px 0 15px;
+  display: flex;
+  align-items: center;
+}
+
+h2 .emoji {
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+h3 {
+  font-size: 1.4em;
+  font-weight: 600;
+  color: #2d3e50;
+  margin: 20px 0 10px;
+}
+
+h4 {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #2d3e50;
+  margin: 15px 0 8px;
+}
+
+p, li {
+  font-size: 1.1em;
+  font-weight: 300;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+p {
+  padding: 0 40px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  position: relative;
+  padding-left: 25px;
+}
+
+ul li:before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #007acc;
+  font-size: 1.2em;
+}
+
+.button-container {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.content-container {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.content-card {
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+button.js-tilt {
+  background: #007acc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  width: 200px;
+  height: 200px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  transition: 
+    box-shadow 0.4s ease,
+    background-color 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+button.js-tilt:hover {
+  background: #005f99;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+button.js-tilt:hover strong {
+  font-weight: 800;
+}
+
+button.js-tilt .number {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+button.js-tilt .phrase {
+  line-height: 1.4;
+}
+
+/* Button slide effect */
+button.icon-slide-left::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: transform 0.25s ease;
+  transform: translateX(-100%);
+}
+
+button.icon-slide-left:hover::before {
+  transform: translateX(0);
+}
+
+button.icon-slide-left::after {
+  content: attr(data-emoji);
+  position: absolute;
+  top: 50%;
+  left: -20%;
+  transform: translate(-50%, -50%);
+  transition: left 0.25s ease;
+  font-size: 16px;
+  z-index: 1;
+}
+
+button.icon-slide-left:hover::after {
+  left: 20px;
+}
+
+/* Estilos para o botão de voltar ao topo */
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: #007acc;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  display: block;
+  opacity: 0;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+}
+
+.back-to-top:hover {
+  background: #005f99;
+  transform: translateY(-5px);
+}
+
+@media (max-width: 480px) {
+  .joke-screen h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
   }
-});
 
-noButton.addEventListener('touchend', (e) => {
-  console.log('Evento touchend disparado no botão Não');
-  if (noButtonAttempts < 3) {
-    e.preventDefault();
-    moveNoButton();
-    noButtonAttempts++;
-    console.log('Tentativa no botão Não (toque):', noButtonAttempts);
-    if (noButtonAttempts >= 3) {
-      noButton.querySelector('.submitMessage .emoji').textContent = '🕶️';
-      noButton.querySelector('.submitMessage .button-text').textContent = 'Com certeza';
-      const textElements = noButton.querySelectorAll('.button-text');
-      textElements.forEach((element) => {
-        const characters = element.innerText.split('');
-        let characterHTML = '';
-        characters.forEach((letter, index) => {
-          characterHTML += `<span class="char${index}" style="--d:${index * 30}ms; --dr:${(characters.length - index - 1) * 30}ms;">${letter}</span>`;
-        });
-        element.innerHTML = characterHTML;
-      });
-      noButton.style.cursor = 'pointer';
-      noButton.style.pointerEvents = 'auto';
-      console.log('Botão Não atualizado para "Com certeza"');
-    }
-  } else {
-    disabledNo = clickButton(noButton, disabledNo, proceedToBanner);
+  .joke-button {
+    width: 150px;
+    height: 36px;
+    font-size: 12px;
   }
-});
 
-yesButton.addEventListener('click', () => {
-  console.log('Evento click disparado no botão Sim');
-  disabledYes = clickButton(yesButton, disabledYes, proceedToBanner);
-});
-
-// Inicialmente, esconde o banner e o conteúdo
-logoBanner.style.display = 'none';
-document.querySelector('header').style.display = 'none';
-document.querySelector('p').style.display = 'none';
-document.querySelector('.button-container').style.display = 'none';
-document.querySelector('.content-container').style.display = 'none';
-document.querySelector('.back-to-top').style.display = 'none';
-
-// Função para rolagem suave ao clicar nos botões
-document.querySelectorAll('.js-tilt').forEach((button) => {
-  button.addEventListener('click', () => {
-    const targetId = button.getAttribute('data-target');
-    console.log('Botão clicado, destino:', targetId);
-    const targetCard = document.getElementById(targetId);
-    if (targetCard) {
-      setTimeout(() => {
-        targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 1000);
-    } else {
-      console.error('Cartão não encontrado para o ID:', targetId);
-    }
-  });
-});
-
-// Função para o botão de voltar ao topo
-const backToTopButton = document.querySelector('.back-to-top');
-const buttonContainer = document.querySelector('.button-container');
-
-window.addEventListener('scroll', () => {
-  const buttonContainerBottom = buttonContainer.offsetTop + buttonContainer.offsetHeight;
-  console.log('ScrollY:', window.scrollY, 'ButtonContainerBottom:', buttonContainerBottom);
-  if (window.scrollY > buttonContainerBottom) {
-    backToTopButton.classList.add('visible');
-  } else {
-    backToTopButton.classList.remove('visible');
+  .emoji {
+    font-size: 14px;
   }
-});
 
-backToTopButton.addEventListener('click', () => {
-  console.log('Botão de voltar ao topo clicado');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+  .logo-banner img.banner-img {
+    width: 100px;
+  }
 
-// Iniciar renderização dos confetes
-console.log('Iniciando render inicial');
-render();
+  button.js-tilt {
+    width: 120px;
+    height: 120px;
+    padding: 10px;
+    font-size: 10px;
+  }
+
+  .button-container, .content-container {
+    padding: 15px;
+    gap: 8px;
+  }
+
+  .content-card {
+    padding: 15px;
+  }
+
+  button.js-tilt .number {
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+
+  button.icon-slide-left::after {
+    font-size: 12px;
+  }
+
+  button.icon-slide-left::before {
+    width: 30px;
+  }
+
+  h2 {
+    font-size: 1.6em;
+  }
+
+  h3 {
+    font-size: 1.2em;
+  }
+
+  h4 {
+    font-size: 1.1em;
+  }
+
+  p, li {
+    font-size: 1em;
+  }
+
+  p {
+    padding: 0 20px;
+  }
+
+  .back-to-top {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    right: 15px;
+    bottom: 15px;
+  }
+}

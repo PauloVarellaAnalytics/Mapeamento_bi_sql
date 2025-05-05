@@ -34,9 +34,6 @@ body {
 .joke-buttons {
   display: flex;
   gap: 20px;
-  justify-content: center;
-  align-items: center;
-  position: relative;
 }
 
 /* Estilos para os botões da brincadeira */
@@ -52,19 +49,10 @@ body {
   outline: none;
   overflow: hidden;
   padding: 0 10px;
+  position: relative;
   width: 190px;
   -webkit-tap-highlight-color: transparent;
   z-index: 1;
-}
-
-.yes-button {
-  position: absolute;
-  left: calc(50% - 210px); /* Centraliza com offset para manter alinhamento */
-}
-
-.no-button {
-  position: absolute;
-  left: calc(50% + 10px); /* Centraliza com offset para manter alinhamento */
 }
 
 .joke-button::before {
@@ -209,7 +197,7 @@ canvas {
   pointer-events: none;
   position: fixed;
   width: 100%;
-  z-index: 2000; /* Aumentado para garantir visibilidade */
+  z-index: 2;
 }
 
 /* Estilos para o banner de entrada */
@@ -456,14 +444,6 @@ button.icon-slide-left:hover::after {
     width: 150px;
     height: 36px;
     font-size: 12px;
-  }
-
-  .yes-button {
-    left: calc(50% - 160px);
-  }
-
-  .no-button {
-    left: calc(50% + 10px);
   }
 
   .emoji {
