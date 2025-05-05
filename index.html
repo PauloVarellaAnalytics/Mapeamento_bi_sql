@@ -22,30 +22,30 @@
   </p>
 
   <div class="button-container">
-    <button class="js-tilt icon-slide-left" data-tilt data-emoji="📊">
+    <button class="js-tilt icon-slide-left" data-tilt data-emoji="📊" data-target="card-2">
       <div class="number"><strong>1º</strong></div>
       <div class="phrase">Extração das tabelas dos relatórios via Diagnóstico de Desempenho e Power BI Helper</div>
     </button>
-    <button class="js-tilt icon-slide-left" data-tilt data-emoji="🔍">
+    <button class="js-tilt icon-slide-left" data-tilt data-emoji="🔍" data-target="card-3">
       <div class="number"><strong>2º</strong></div>
       <div class="phrase">Identificação dos servidores e bancos de dados de origem</div>
     </button>
-    <button class="js-tilt icon-slide-left" data-tilt data-emoji="⚙️">
+    <button class="js-tilt icon-slide-left" data-tilt data-emoji="⚙️" data-target="card-4">
       <div class="number"><strong>3º</strong></div>
       <div class="phrase">Mapeamento de procedures e jobs associadas</div>
     </button>
-    <button class="js-tilt icon-slide-left" data-tilt data-emoji="📦">
+    <button class="js-tilt icon-slide-left" data-tilt data-emoji="📦" data-target="card-5">
       <div class="number"><strong>4º</strong></div>
       <div class="phrase">Associação com pacotes e projetos ETL</div>
     </button>
-    <button class="js-tilt icon-slide-left" data-tilt data-emoji="🧪">
+    <button class="js-tilt icon-slide-left" data-tilt data-emoji="🧪" data-target="card-6">
       <div class="number"><strong>5º</strong></div>
       <div class="phrase">Verificação de comandos INSERT nas procedures para confirmar as origens dos dados</div>
     </button>
   </div>
 
   <div class="content-container">
-    <div class="content-card">
+    <div class="content-card" id="card-1">
       <h2>Visão Geral da Atividade</h2>
       <p>
         A atividade iniciou com o recebimento de uma planilha contendo os relatórios que deveriam ser mapeados. As informações requeridas incluíam:
@@ -62,7 +62,7 @@
       </ul>
     </div>
 
-    <div class="content-card">
+    <div class="content-card" id="card-2">
       <h2><span class="emoji">📊</span> 2. Métodos Utilizados para Identificação de Tabelas</h2>
       <h3>2.1. Método 1 – Diagnóstico no Power BI (sem software adicional)</h3>
       <ul>
@@ -87,7 +87,7 @@
       </ul>
     </div>
 
-    <div class="content-card">
+    <div class="content-card" id="card-3">
       <h2><span class="emoji">🔍</span> 3. Identificação do Servidor de Origem</h2>
       <p>Foi criado um script que:</p>
       <ul>
@@ -98,7 +98,7 @@
       </ul>
     </div>
 
-    <div class="content-card">
+    <div class="content-card" id="card-4">
       <h2><span class="emoji">⚙️</span> 4. Mapeamento de Procedures</h2>
       <p>Criação de um script que percorre todas as procedures dos bancos:</p>
       <ul>
@@ -108,7 +108,7 @@
       </ul>
     </div>
 
-    <div class="content-card">
+    <div class="content-card" id="card-5">
       <h2><span class="emoji">📦</span> 5. Mapeamento de Jobs e Projetos ETL</h2>
       <h3>5.1. Join entre Jobs e ETLs</h3>
       <ul>
@@ -130,7 +130,7 @@
       </ul>
     </div>
 
-    <div class="content-card">
+    <div class="content-card" id="card-6">
       <h2>6. Benefícios da Solução</h2>
       <ul>
         <li>Automatização do mapeamento e redução de erros manuais</li>
@@ -141,7 +141,7 @@
       </ul>
     </div>
 
-    <div class="content-card">
+    <div class="content-card" id="card-7">
       <h2>7. Próximos Passos</h2>
       <ul>
         <li>Inserção dos scripts utilizados (a serem adicionados posteriormente)</li>
