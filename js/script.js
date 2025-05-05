@@ -6,14 +6,15 @@ VanillaTilt.init(document.querySelectorAll(".js-tilt"), {
 });
 
 // Função para rolagem suave ao clicar nos botões
-document.querySelectorAll('.js-tilt').forEach((button, index) => {
+document.querySelectorAll('.js-tilt').forEach((button) => {
   button.addEventListener('click', () => {
-    // Atraso de 1 segundo antes da rolagem
-    setTimeout(() => {
-      const targetCard = document.querySelector(`.content-card:nth-child(${index + 2})`);
-      if (targetCard) {
+    const targetId = button.getAttribute('data-target');
+    const targetCard = document.getElementById(targetId);
+    if (targetCard) {
+      // Atraso de 1 segundo antes da rolagem
+      setTimeout(() => {
         targetCard.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 500);
+      }, 500);
+    }
   });
 });
