@@ -202,21 +202,21 @@ button.icon-slide-left:hover::after {
   height: 50px;
   font-size: 24px;
   cursor: pointer;
-  display: none;
+  display: block;
+  opacity: 0;
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+.back-to-top.visible {
+  opacity: 1;
+}
+
 .back-to-top:hover {
   background: #005f99;
   transform: translateY(-5px);
-}
-
-.back-to-top.visible {
-  display: flex;
-  opacity: 1;
 }
 
 @media (max-width: 480px) {
