@@ -100,7 +100,7 @@ confettiSound.oncanplaythrough = () => console.log('Som confetti.wav carregado c
 confettiSound.onerror = (err) => console.error('Erro ao carregar som confetti.wav:', err);
 
 initBurst = (button) => {
-  console.log('initBurst chamado para botão:', button.id, 'posição:', button.getBoundingClientRect()); // Depuração
+  console.log('initBurst chamado para botão:', button.id, 'posição:', button.getBoundingClientRect());
   confetti = []; // Limpar confetes anteriores
   sequins = []; // Limpar sequins anteriores
   for (let i = 0; i < confettiCount; i++) {
@@ -109,7 +109,7 @@ initBurst = (button) => {
   for (let i = 0; i < sequinCount; i++) {
     sequins.push(new Sequin(button));
   }
-  console.log('Confetes criados:', confetti.length, 'Sequins criados:', sequins.length); // Depuração
+  console.log('Confetes criados:', confetti.length, 'Sequins criados:', sequins.length);
   confettiSound.currentTime = 0; // Resetar som
   confettiSound.play().catch(err => console.error('Erro ao tocar som:', err));
   window.requestAnimationFrame(render); // Forçar renderização
@@ -118,10 +118,10 @@ initBurst = (button) => {
 render = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   if (confetti.length === 0 && sequins.length === 0) {
-    console.log('Nenhum confete para renderizar, parando render'); // Depuração
+    console.log('Nenhum confete para renderizar, parando render');
     return;
   }
-  console.log('Renderizando, confetti:', confetti.length, 'sequins:', sequins.length); // Depuração
+  console.log('Renderizando, confetti:', confetti.length, 'sequins:', sequins.length);
   confetti.forEach((confetto, index) => {
     let width = confetto.dimensions.x * confetto.scale.x;
     let height = confetto.dimensions.y * confetto.scale.y;
@@ -149,7 +149,7 @@ render = () => {
 resizeCanvas = () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-  console.log('Canvas redimensionado:', canvas.width, 'x', canvas.height); // Depuração
+  console.log('Canvas redimensionado:', canvas.width, 'x', canvas.height);
 };
 
 window.addEventListener('resize', resizeCanvas);
@@ -173,41 +173,56 @@ function proceedToBanner() {
     document.querySelector('.content-container').style.display = 'flex';
     document.querySelector('.back-to-top').style.display = 'block';
     document.querySelector('p').style.display = 'block';
-    console.log('Banner removido, conteúdo restaurado'); // Para depuração
+    console.log('Banner removido, conteúdo restaurado');
     confetti = []; // Limpar confetes ao carregar o site
     sequins = [];
-    console.log('Confetes e sequins limpos ao carregar site'); // Depuração
+    console.log('Confetes e sequins limpos ao carregar site');
   }, 1500);
 }
 
 function moveNoButton() {
   const isMobile = window.innerWidth <= 480;
-  const offset = isMobile ? 50 : 100; // Menor deslocamento em mobile
-  const margin = 20; // Margem segura das bordas aumentada
-  const clientWidth = document.documentElement.clientWidth;
-  const clientHeight = document.documentElement.clientHeight;
-  const buttonWidth = noButton.offsetWidth || 190; // Valor padrão caso offsetWidth seja 0
-  const buttonHeight = noButton.offsetHeight || 40; // Valor padrão caso offsetHeight seja 0
-  const maxX = clientWidth - buttonWidth - margin;
-  const maxY = clientHeight - buttonHeight - margin;
+  const offset = isMobile ? 30 : 50; // Deslocamento reduzido
+  const margin = 30; // Margem segura aumentada
+  const jokeScreenRect = jokeScreen.getBoundingClientRect();
+  const buttonRect = noButton.getBoundingClientRect();
   
-  // Usar posição atual do botão como base
-  const rect = noButton.getBoundingClientRect();
-  const currentX = rect.left;
-  const currentY = rect.top;
+  // Dimensões do botão com valores padrão
+  const buttonWidth = buttonRect.width || 190;
+  const buttonHeight = buttonRect.height || 40;
   
-  // Garantir que a nova posição esteja dentro dos limites
+  // Definir quadro (80% da área da joke-screen)
+  const frameWidth = jokeScreenRect.width * 0.8;
+  const frameHeight = jokeScreenRect.height * 0.8;
+  const frameX = (jokeScreenRect.width - frameWidth) / 2 + jokeScreenRect.left;
+  const frameY = (jokeScreenRect.height - frameHeight) / 2 + jokeScreenRect.top;
+  
+  const maxX = frameX + frameWidth - buttonWidth - margin;
+  const minX = frameX + margin;
+  const maxY = frameY + frameHeight - buttonHeight - margin;
+  const minY = frameY + margin;
+  
+  // Posição atual ou inicial (se inválida)
+  let currentX = buttonRect.left;
+  let currentY = buttonRect.top;
+  if (!isFinite(currentX) || currentX < minX || currentX > maxX || !isFinite(currentY) || currentY < minY || currentY > maxY) {
+    currentX = frameX + frameWidth / 2 - buttonWidth / 2; // Centro do quadro
+    currentY = frameY + frameHeight / 2 - buttonHeight / 2;
+  }
+  
+  // Calcular nova posição
   let newX = currentX + (Math.random() * offset * 2 - offset);
   let newY = currentY + (Math.random() * offset * 2 - offset);
-  newX = Math.max(margin, Math.min(maxX, newX));
-  newY = Math.max(margin, Math.min(maxY, newY));
+  newX = Math.max(minX, Math.min(maxX, newX));
+  newY = Math.max(minY, Math.min(maxY, newY));
   
   noButton.style.position = 'absolute';
   noButton.style.left = `${newX}px`;
   noButton.style.top = `${newY}px`;
-  noButton.style.pointerEvents = 'auto'; // Garantir que o botão permaneça clicável
-  noButton.style.cursor = 'pointer'; // Garantir cursor padrão
-  console.log('Botão Não movido para:', newX, newY, 'Mobile:', isMobile, 'ClientWidth:', clientWidth, 'ClientHeight:', clientHeight, 'ButtonWidth:', buttonWidth, 'ButtonHeight:', buttonHeight); // Depuração
+  noButton.style.pointerEvents = 'auto';
+  noButton.style.cursor = 'pointer';
+  noButton.style.visibility = 'visible'; // Garantir visibilidade
+  console.log('Botão Não movido para:', newX, newY, 'Mobile:', isMobile, 'Frame:', { minX, maxX, minY, maxY }, 'Button:', { width: buttonWidth, height: buttonHeight });
 }
 
 function clickButton(button, disabledFlag, callback) {
@@ -215,12 +230,12 @@ function clickButton(button, disabledFlag, callback) {
     disabledFlag = true;
     button.classList.add('loading');
     button.classList.remove('ready');
-    console.log('clickButton iniciado para:', button.id); // Depuração
+    console.log('clickButton iniciado para:', button.id);
     setTimeout(() => {
       button.classList.add('complete');
       button.classList.remove('loading');
       setTimeout(() => {
-        console.log('Iniciando initBurst para:', button.id); // Depuração
+        console.log('Iniciando initBurst para:', button.id);
         initBurst(button);
         setTimeout(() => {
           disabledFlag = false;
@@ -228,7 +243,7 @@ function clickButton(button, disabledFlag, callback) {
           button.classList.remove('complete');
           confetti = []; // Limpar confetes após animação
           sequins = []; // Limpar sequins após animação
-          console.log('Confetes e sequins limpos após animação'); // Depuração
+          console.log('Confetes e sequins limpos após animação');
           callback();
         }, 4000);
       }, 320);
@@ -250,9 +265,15 @@ function clickButton(button, disabledFlag, callback) {
   });
 });
 
+// Garantir posição inicial visível do botão "Não"
+window.addEventListener('load', () => {
+  moveNoButton(); // Posicionar botão "Não" inicialmente
+  console.log('Botão Não posicionado ao carregar página');
+});
+
 // Eventos para o botão "Não"
 noButton.addEventListener('click', (e) => {
-  console.log('Evento click disparado no botão Não'); // Depuração
+  console.log('Evento click disparado no botão Não');
   if (noButtonAttempts < 3) {
     e.preventDefault();
     moveNoButton();
@@ -280,7 +301,7 @@ noButton.addEventListener('click', (e) => {
 });
 
 noButton.addEventListener('touchend', (e) => {
-  console.log('Evento touchend disparado no botão Não'); // Depuração
+  console.log('Evento touchend disparado no botão Não');
   if (noButtonAttempts < 3) {
     e.preventDefault();
     moveNoButton();
@@ -308,7 +329,7 @@ noButton.addEventListener('touchend', (e) => {
 });
 
 yesButton.addEventListener('click', () => {
-  console.log('Evento click disparado no botão Sim'); // Depuração
+  console.log('Evento click disparado no botão Sim');
   disabledYes = clickButton(yesButton, disabledYes, proceedToBanner);
 });
 
@@ -324,7 +345,7 @@ document.querySelector('.back-to-top').style.display = 'none';
 document.querySelectorAll('.js-tilt').forEach((button) => {
   button.addEventListener('click', () => {
     const targetId = button.getAttribute('data-target');
-    console.log('Botão clicado, destino:', targetId); // Para depuração
+    console.log('Botão clicado, destino:', targetId);
     const targetCard = document.getElementById(targetId);
     if (targetCard) {
       setTimeout(() => {
@@ -342,7 +363,7 @@ const buttonContainer = document.querySelector('.button-container');
 
 window.addEventListener('scroll', () => {
   const buttonContainerBottom = buttonContainer.offsetTop + buttonContainer.offsetHeight;
-  console.log('ScrollY:', window.scrollY, 'ButtonContainerBottom:', buttonContainerBottom); // Depuração
+  console.log('ScrollY:', window.scrollY, 'ButtonContainerBottom:', buttonContainerBottom);
   if (window.scrollY > buttonContainerBottom) {
     backToTopButton.classList.add('visible');
   } else {
@@ -351,10 +372,10 @@ window.addEventListener('scroll', () => {
 });
 
 backToTopButton.addEventListener('click', () => {
-  console.log('Botão de voltar ao topo clicado'); // Para depuração
+  console.log('Botão de voltar ao topo clicado');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 // Iniciar renderização dos confetes
-console.log('Iniciando render inicial'); // Depuração
+console.log('Iniciando render inicial');
 render();
