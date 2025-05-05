@@ -10,6 +10,88 @@ body {
   color: #333;
 }
 
+/* Estilos para a tela da brincadeira */
+.joke-screen {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.joke-screen h2 {
+  font-size: 2em;
+  color: #2d3e50;
+  margin-bottom: 30px;
+}
+
+.joke-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.joke-button {
+  padding: 15px 30px;
+  font-size: 1.2em;
+  font-family: 'Nunito', sans-serif;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.yes-button {
+  background: #007acc;
+  color: #fff;
+}
+
+.yes-button:hover {
+  background: #005f99;
+  transform: scale(1.05);
+}
+
+.no-button {
+  background: #ff4d4d;
+  color: #fff;
+  position: relative;
+  transition: left 0.2s ease, top 0.2s ease;
+}
+
+.no-button:hover {
+  background: #cc0000;
+  transform: scale(1.05);
+}
+
+/* Estilos para o banner de entrada */
+.logo-banner {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-banner img.banner-img {
+  width: 150px;
+  height: auto;
+  animation: bounce 0.8s ease infinite;
+}
+
+@keyframes bounce {
+  0% { opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
 header {
   padding: 30px 20px 10px;
   text-align: center;
@@ -189,31 +271,6 @@ button.icon-slide-left:hover::after {
   left: 20px;
 }
 
-/* Estilos para o banner de entrada */
-.logo-banner {
-  position: fixed;
-  inset: 0;
-  background: #fff;
-  z-index: 999;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.logo-banner img.banner-img {
-  width: 150px;
-  height: auto;
-  animation: bounce 0.8s ease infinite;
-}
-
-@keyframes bounce {
-  0% { opacity: 0; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
-}
-
 /* Estilos para o botão de voltar ao topo */
 .back-to-top {
   position: fixed;
@@ -245,6 +302,20 @@ button.icon-slide-left:hover::after {
 }
 
 @media (max-width: 480px) {
+  .joke-screen h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+
+  .joke-button {
+    padding: 10px 20px;
+    font-size: 1em;
+  }
+
+  .logo-banner img.banner-img {
+    width: 100px;
+  }
+
   button.js-tilt {
     width: 120px;
     height: 120px;
@@ -292,10 +363,6 @@ button.icon-slide-left:hover::after {
 
   p {
     padding: 0 20px;
-  }
-
-  .logo-banner img.banner-img {
-    width: 100px;
   }
 
   .back-to-top {
