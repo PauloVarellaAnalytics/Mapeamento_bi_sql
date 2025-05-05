@@ -189,6 +189,31 @@ button.icon-slide-left:hover::after {
   left: 20px;
 }
 
+/* Estilos para o banner de entrada */
+.logo-banner {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-banner img.banner-img {
+  width: 150px;
+  height: auto;
+  animation: bounce 0.8s ease infinite;
+}
+
+@keyframes bounce {
+  0% { opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
 /* Estilos para o botão de voltar ao topo */
 .back-to-top {
   position: fixed;
@@ -267,6 +292,10 @@ button.icon-slide-left:hover::after {
 
   p {
     padding: 0 20px;
+  }
+
+  .logo-banner img.banner-img {
+    width: 100px;
   }
 
   .back-to-top {

@@ -5,6 +5,15 @@ VanillaTilt.init(document.querySelectorAll(".js-tilt"), {
   "max-glare": 0.2
 });
 
+// Remove o banner de entrada após 1,5 segundos
+setTimeout(() => {
+  const logoBanner = document.querySelector('.logo-banner');
+  if (logoBanner) {
+    logoBanner.remove();
+    console.log('Banner de entrada removido'); // Para depuração
+  }
+}, 1500);
+
 // Função para rolagem suave ao clicar nos botões
 document.querySelectorAll('.js-tilt').forEach((button) => {
   button.addEventListener('click', () => {
